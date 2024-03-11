@@ -1,0 +1,80 @@
+_schema-version: "3.2"
+ID: ZPOUX001
+version: 0.0.1
+modules:
+- name: ZPOUX001-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: ZPOUX001-destination-service
+    parameters:
+      content-target: true
+  - name: ZPOUX001_html_repo_host
+    parameters:
+      service-key:
+        name: ZPOUX001_html_repo_host-key
+  - name: uaa_ZPOUX001
+    parameters:
+      service-key:
+        name: uaa_ZPOUX001-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: ZPOUX001app_ZPOUX001_html_repo_host
+          ServiceInstanceName: ZPOUX001-html5-app-host-service
+          ServiceKeyName: ZPOUX001_html_repo_host-key
+          sap.cloud.service: ZPOUX001app
+        - Authentication: OAuth2UserTokenExchange
+          Name: ZPOUX001app_uaa_ZPOUX001
+          ServiceInstanceName: ZPOUX001-xsuaa-service
+          ServiceKeyName: uaa_ZPOUX001-key
+          sap.cloud.service: ZPOUX001app
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: ZPOUX001_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: ZPOUX001_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - zpoux001-content.zip
+      name: zpoux001
+      target-path: resources/
+- name: zpoux001
+  type: html5
+  path: zpoux001
+  build-parameters:
+    builder: custom
+    commands:
+    - npm install
+    - npm run build
+    supported-platforms: []
+resources:
+- name: ZPOUX001-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      version: 1.0.0
+    service: destination
+    service-name: ZPOUX001-destination-service
+    service-plan: lite
+- name: ZPOUX001_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: ZPOUX001-html5-app-host-service
+    service-plan: app-host
+- name: uaa_ZPOUX001
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: ZPOUX001-xsuaa-service
+    service-plan: application

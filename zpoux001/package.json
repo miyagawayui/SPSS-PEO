@@ -1,0 +1,64 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "./",
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "@ui5/webcomponents": "^1.21.0",
+    "@ui5/webcomponents-fiori": "^1.21.0",
+    "@ui5/webcomponents-icons": "^1.21.0",
+    "@ui5/webcomponents-react": "^1.24.0",
+    "axios": "^1.6.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router": "^6.22.0",
+    "react-router-dom": "^6.22.0",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^1.1.1"
+  },
+  "devDependencies": {
+    "bestzip": "^2.2.0",
+    "npm-watch": "^0.9.0",
+    "copyfiles": "^2.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build && npm run zip",
+    "watch": "npm-watch",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "zip": "cd build && npx bestzip ../zpoux001-content.zip *"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "js,jsx"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "sap.ui": {
+    "technology": "react.js"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
