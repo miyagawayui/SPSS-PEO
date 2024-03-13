@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./App.css";
 import NotFound from "pages/NotFound";
 import TestPage from "pages/TestPage";
+import TestForModalPage from "pages/TestForModalPage";
 import WorkListPage from "pages/WorkListPage";
 import MaterialSerialSelectPage from "pages/MaterialSerialSelectPage";
 // import Router from "pages/Router";
