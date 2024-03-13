@@ -29,6 +29,23 @@
       },
       "envFile": "${workspaceFolder}/zpoux001/.env1",
       "preLaunchTask": "Run zpoux001"
+    },
+    {
+      "name": "Run topic-ZPOUX001-fj1-zpoux001",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@sap/html5-repo-mock/index.js",
+      "args": [
+        "--standalone",
+        "/zpoux001/index.html"
+      ],
+      "cwd": "${workspaceFolder}/zpoux001/build",
+      "env": {
+        "PORT": "6004",
+        "run.config": "{\"handlerId\":\"html5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/topic-ZPOUX001-fj1/zpoux001\"}"
+      },
+      "envFile": "${workspaceFolder}/zpoux001/.env3",
+      "preLaunchTask": "Run topic-ZPOUX001-fj1"
     }
   ]
 }

@@ -2,5 +2,5 @@
   "compilerOptions": {
     "baseUrl": "src"
   },
-  "include": ["src", "setupTests.js"]
+  "include": ["src", "setupTests.js", "src/components/OASelectModal.js"]
 }

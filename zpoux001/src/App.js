@@ -41,10 +41,11 @@ const App = () => {
       <Router>
         <Routes>
           {/* ここに遷移するページコンポーネントを記載 */}
-          <Route path={`/`} element={<WorkListPage />} />
-          <Route path={`/pages/MaterialSerialSelectPage`} element={<MaterialSerialSelectPage/>} />
+          <Route path={`/`} element={<NotFound />} />
+          <Route path={`/pages/MaterialSerialSelectPage`} element={<MaterialSerialSelectPage />} />
           <Route path={`/pages/TestPage`} element={<TestPage />} />
           <Route path={`/pages/NotFound`} element={<NotFound />} />
+          <Route path={`/pages/TestForModalPage`} element={<TestForModalPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
