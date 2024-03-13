@@ -41,7 +41,7 @@ const App = () => {
       <Router>
         <Routes>
           {/* ここに遷移するページコンポーネントを記載 */}
-          <Route path={`/`} element={<NotFound />} />
+          <Route path={`/`} element={<TestForModalPage />} />
           <Route path={`/pages/MaterialSerialSelectPage`} element={<MaterialSerialSelectPage />} />
           <Route path={`/pages/TestPage`} element={<TestPage />} />
           <Route path={`/pages/NotFound`} element={<NotFound />} />
