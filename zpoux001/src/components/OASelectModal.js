@@ -1,12 +1,10 @@
 //作業活動選択画面（モーダル）
 import React, {useState, useEffect} from "react";
-import {
-  Modals
-} from "@ui5/webcomponents-react";
+import { Modals , Button, Bar} from '@ui5/webcomponents-react';
 
-// when you can use hooks
-const showDialog = Modals.useShowDialog();
-const { ref, close } = showDialog(props, container);
+// when you can't use hooks (e.g. inside a redux reducer)
+const { ref, close } = Modals.showDialog(props, container);
+
 
 {
   render: () => {
