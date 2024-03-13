@@ -23,6 +23,12 @@ registerI18nLoader('i18n_WorkListPage', lang, async () => {
   return parse(props); // this call is required for parsing the properties text
 });
 
+// i18n_TestForModalPageのproperties
+registerI18nLoader('i18n_TestForModalPage', lang, async () => {
+  const props = await (await fetch("./i18n/i18n_TestForModalPage_" + lang + ".properties")).text();
+  return parse(props); // this call is required for parsing the properties text
+});
+
 // MaterialSerialSelectPageのproperties
 //registerI18nLoader('i18n_MaterialSerialSelectPage', lang, async () => {
 //  const props = await (await fetch("./i18n/i18n_MaterialSerialSelectPage_" + lang + ".properties")).text();
