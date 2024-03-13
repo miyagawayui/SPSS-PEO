@@ -24,10 +24,10 @@ registerI18nLoader('i18n_WorkListPage', lang, async () => {
 });
 
 // MaterialSerialSelectPageのproperties
-registerI18nLoader('i18n_MaterialSerialSelectPage', lang, async () => {
-  const props = await (await fetch("./i18n/i18n_MaterialSerialSelectPage_" + lang + ".properties")).text();
-  return parse(props); // this call is required for parsing the properties text
-});
+//registerI18nLoader('i18n_MaterialSerialSelectPage', lang, async () => {
+//  const props = await (await fetch("./i18n/i18n_MaterialSerialSelectPage_" + lang + ".properties")).text();
+//  return parse(props); // this call is required for parsing the properties text
+//});
 
 // 別ファイル読み込み
 registerI18nLoader('i18n_', lang, async () => {
