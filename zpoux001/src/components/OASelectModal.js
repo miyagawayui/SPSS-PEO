@@ -5,7 +5,6 @@ import { Modals , Button, Bar} from '@ui5/webcomponents-react';
 // when you can't use hooks (e.g. inside a redux reducer)
 const { ref, close } = Modals.showDialog(props, container);
 
-
 {
   render: () => {
     const showDialog = Modals.useShowDialog();
