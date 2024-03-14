@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./App.css";
 import NotFound from "pages/NotFound";
 import TestPage from "pages/TestPage";
+import TestForModalPage from "pages/TestForModalPage";
 import WorkListPage from "pages/WorkListPage";
 import MaterialSerialSelectPage from "pages/MaterialSerialSelectPage";
 // import Router from "pages/Router";
@@ -24,11 +25,17 @@ registerI18nLoader('i18n_WorkListPage', lang, async () => {
   return parse(props); // this call is required for parsing the properties text
 });
 
-// MaterialSerialSelectPageのproperties
-registerI18nLoader('i18n_MaterialSerialSelectPage', lang, async () => {
-  const props = await (await fetch("./i18n/i18n_MaterialSerialSelectPage_" + lang + ".properties")).text();
+// i18n_TestForModalPageのproperties
+registerI18nLoader('i18n_TestForModalPage', lang, async () => {
+  const props = await (await fetch("./i18n/i18n_TestForModalPage_" + lang + ".properties")).text();
   return parse(props); // this call is required for parsing the properties text
 });
+
+// MaterialSerialSelectPageのproperties
+//registerI18nLoader('i18n_MaterialSerialSelectPage', lang, async () => {
+//  const props = await (await fetch("./i18n/i18n_MaterialSerialSelectPage_" + lang + ".properties")).text();
+//  return parse(props); // this call is required for parsing the properties text
+//});
 
 // 別ファイル読み込み
 registerI18nLoader('i18n_', lang, async () => {
