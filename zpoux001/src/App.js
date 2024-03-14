@@ -8,6 +8,7 @@ import MaterialSerialSelectPage from "pages/MaterialSerialSelectPage";
 // import Router from "pages/Router";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from '@ui5/webcomponents-react';
+import WorkSelectionPage from "pages/WorkSelectionPage"
 
 // 言語関係
 import { registerI18nLoader } from '@ui5/webcomponents-base/dist/asset-registries/i18n.js';
@@ -41,10 +42,11 @@ const App = () => {
       <Router>
         <Routes>
           {/* ここに遷移するページコンポーネントを記載 */}
-          <Route path={`/`} element={<WorkListPage />} />
-          <Route path={`/pages/MaterialSerialSelectPage`} element={<MaterialSerialSelectPage/>} />
+          {/* <Route path={`/`} element={<WorkListPage />} /> */}
+          {/* <Route path={`/pages/MaterialSerialSelectPage`} element={<MaterialSerialSelectPage/>} /> */}
           <Route path={`/pages/TestPage`} element={<TestPage />} />
           <Route path={`/pages/NotFound`} element={<NotFound />} />
+          <Route path={`/`} element={<WorkSelectionPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
