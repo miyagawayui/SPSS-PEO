@@ -4,7 +4,7 @@ import "@ui5/webcomponents/dist/Tab";
 import "@ui5/webcomponents/dist/TabSeparator";
 import { Page } from '@ui5/webcomponents-react';
 import { Button, RadioButton, Input, Label, FlexBox, Icon } from '@ui5/webcomponents-react';
-import { WorkSelectionDialog } from "components/WorkSelectionModal"
+import { WorkSelectionDialog } from "components/WorkSelectionDialog"
 import { OrderSearchDialog } from 'components/OrderSearchDialog'
 import { OpSearchDialog } from 'components/OpSearchDialog'
 import { ItemSearchDialog } from 'components/ItemSearchDialog'
