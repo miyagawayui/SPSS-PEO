@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import "@ui5/webcomponents/dist/TabContainer";
 import "@ui5/webcomponents/dist/Tab";
 import "@ui5/webcomponents/dist/TabSeparator";
-import { Page } from '@ui5/webcomponents-react';
+import { Page, ResponsiveGridLayout } from '@ui5/webcomponents-react';
 import { Button, RadioButton, Input, Label, FlexBox, Icon } from '@ui5/webcomponents-react';
 import { OASelectDialog } from "components/OASelectDialog"
 import { OrderSearchDialog } from 'components/OrderSearchDialog'
 import { OpSearchDialog } from 'components/OpSearchDialog'
 import { ItemSearchDialog } from 'components/ItemSearchDialog'
 import { SerialSearchDialog } from 'components/SerialSearchDialog'
+import "../App.css";
 
 
 // 画面遷移
@@ -28,29 +29,31 @@ const PAGE_SIZE = 15;
 
 export default function WorkSelectionPage() {
 
+    // 作業活動選択の変数定義
     const [showOASelectDialog, setShowOASelectDialog] = useState(false)
     const closeWorkSelectionDialog = () => {
         setShowOASelectDialog(false);
     }
-    //指図検索ヘルプの変数定義
+
+    // 指図検索ヘルプの変数定義
     const [showOrderSearchDialog, setShowOrderSearchDialog] = useState(false)
     const closeOrderSearchDialog = () => {
         setShowOrderSearchDialog(false);
     }
 
-    //作業検索ヘルプの変数定義
+    // 作業検索ヘルプの変数定義
     const [showOpSearchDialog, setShowOpSearchDialog] = useState(false)
     const closeOpSearchDialog = () => {
         setShowOpSearchDialog(false);
     }
 
-    //品目検索ヘルプの変数定義
+    // 品目検索ヘルプの変数定義
     const [showItemSearchDialog, setShowItemSearchDialog] = useState(false)
     const closeItemSearchDialog = () => {
         setShowItemSearchDialog(false);
     }
 
-    //シリアル番号検索ヘルプの変数定義
+    // シリアル番号検索ヘルプの変数定義
     const [showSerialSearchDialog, setShowSerialSearchDialog] = useState(false)
     const closeSerialSearchDialog = () => {
         setShowSerialSearchDialog(false);
@@ -68,16 +71,16 @@ export default function WorkSelectionPage() {
                     height: '100svh'
                 }}
             >
-                <FlexBox>
+                {/* <FlexBox justifyContent="Center">
                     <RadioButton name="mode" text="指図/作業検索" />
                     <RadioButton name="mode" text="品目/シリアル番号検索" />
                 </FlexBox>
                 <Label>指図/作業検索</Label>
-                <FlexBox>
+                <FlexBox justifyContent="Center" alignItems="Center">
                     <Label>指図：</Label>
                     <Input icon={
                         <Icon
-                            name="dimension"
+                            name="value-help"
                             onClick={() => setShowOrderSearchDialog(true)}>
                         </Icon>}
                         maxlength={12}
@@ -87,7 +90,7 @@ export default function WorkSelectionPage() {
                     <Label>作業：</Label>
                     <Input icon={
                         <Icon
-                            name="dimension"
+                            name="value-help"
                             onClick={() => setShowOpSearchDialog(true)}>
                         </Icon>}
                         maxlength={4}
@@ -96,33 +99,152 @@ export default function WorkSelectionPage() {
                     </Input>
                 </FlexBox>
                 <Label>品目・シリアル番号検索</Label>
-                <FlexBox>
+                <FlexBox justifyContent="Center" alignItems="Center">
                     <Label>品目：</Label>
                     <Input icon={
                         <Icon
-                            name="dimension"
+                            name="value-help"
                             onClick={() => setShowItemSearchDialog(true)}>
                         </Icon>}
                         maxlength={40}
-                    >    
+                    >
                     </Input>
                     <Label>シリアル番号：</Label>
                     <Input icon={
                         <Icon
-                            name="dimension"
+                            name="value-help"
                             onClick={() => setShowSerialSearchDialog(true)}>
                         </Icon>}
                         maxlength={18}
-                    >    
+                    >
                     </Input>
                 </FlexBox>
-                <Button onClick={() => setShowOASelectDialog(true)}>作業開始</Button>
+                <Button onClick={() => setShowOASelectDialog(true)}>作業開始</Button> */}
+
+
+
+                <ResponsiveGridLayout columnsXL={12} columnSpanXL={2} columnSpanL={2} columnSpanM={3} columnSpanS={12} className="grid-row">
+                    <div></div>
+                    <div></div>
+                    <div>
+                        <RadioButton name="mode" text="指図/作業検索" />
+                    </div>
+                    <div>
+                        <RadioButton name="mode" text="品目/シリアル番号検索" />
+                    </div>
+                </ResponsiveGridLayout>
+                <ResponsiveGridLayout columnsXL={12} columnSpanXL={2} columnSpanL={2} columnSpanM={6} columnSpanS={12} className="grid-row">
+                    <div style={{
+                        // background: 'var(--sapAccentColor1)',
+                        gridColumn: 'span 3'
+                    }}></div>
+                    <div class="input-title">
+                        <Label>指図/作業検索</Label>
+                    </div>
+                </ResponsiveGridLayout>
+                <ResponsiveGridLayout
+                    columnsXL={12}
+                    columnSpanXL={2}
+                    columnSpanL={2}
+                    columnSpanM={6}
+                    columnSpanS={6}
+                    className="grid-row"
+                    style={{
+                        alignItems: 'center'
+                    }}>
+                    <div></div>
+                    <div class="input-label">
+                        <Label>指図：</Label>
+                    </div>
+                    <div>
+                        <Input icon={
+                            <Icon
+                                name="value-help"
+                                onClick={() => setShowOrderSearchDialog(true)}>
+                            </Icon>}
+                            maxlength={12}
+                            type="Number"
+                        >
+                        </Input>
+                    </div>
+                    <div class="input-label">
+                        <Label>作業：</Label>
+                    </div>
+                    <div>
+                        <Input icon={
+                            <Icon
+                                name="value-help"
+                                onClick={() => setShowOpSearchDialog(true)}>
+                            </Icon>}
+                            maxlength={4}
+                            type="Number"
+                        >
+                        </Input>
+                    </div>
+                </ResponsiveGridLayout>
+                <ResponsiveGridLayout columnsXL={12} columnSpanXL={2} columnSpanL={2} columnSpanM={6} columnSpanS={12} className="grid-row">
+                    <div style={{
+                        // background: 'var(--sapAccentColor1)',
+                        gridColumn: 'span 3'
+                    }}></div>
+                    <div class="input-title">
+                        <Label>品目/シリアル番号検索</Label>
+                    </div>
+                </ResponsiveGridLayout>
+                <ResponsiveGridLayout
+                    columnsXL={12}
+                    columnSpanXL={2}
+                    columnSpanL={2}
+                    columnSpanM={6}
+                    columnSpanS={6}
+                    className="grid-row"
+                    rowGap="1rem"
+                    style={{
+                        alignItems: 'center'
+                    }}>
+                    <div></div>
+                    <div class="input-label">
+                        <Label>品目：</Label>
+                    </div>
+                    <div>
+                        <Input icon={
+                            <Icon
+                                name="value-help"
+                                onClick={() => setShowItemSearchDialog(true)}>
+                            </Icon>}
+                            maxlength={40}
+                        >
+                        </Input>
+                    </div>
+                    <div class="input-label">
+                        <Label>シリアル番号：</Label>
+                    </div>
+                    <div>
+                        <Input icon={
+                            <Icon
+                                name="value-help"
+                                onClick={() => setShowSerialSearchDialog(true)}>
+                            </Icon>}
+                            maxlength={18}
+                        >
+                        </Input>
+                    </div>
+                </ResponsiveGridLayout>
+                <ResponsiveGridLayout columnsXL={12} columnSpanL={1} className="grid-row">
+                    <div style={{
+                        // background: 'var(--sapAccentColor1)',
+                        gridColumn: 'span 9'
+                    }}></div>
+                    <div class='input-label'>
+                        <Button design="Emphasized" onClick={() => setShowOASelectDialog(true)}>作業開始</Button>
+                    </div>
+                </ResponsiveGridLayout>
             </Page>
             <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} />
-            <OrderSearchDialog isOpen={showOrderSearchDialog} closeDialog={closeOrderSearchDialog}/>
-            <OpSearchDialog isOpen={showOpSearchDialog} closeDialog={closeOpSearchDialog}/>
-            <ItemSearchDialog isOpen={showItemSearchDialog} closeDialog={closeItemSearchDialog}/>
-            <SerialSearchDialog isOpen={showSerialSearchDialog} closeDialog={closeSerialSearchDialog}/>
+            <OrderSearchDialog isOpen={showOrderSearchDialog} closeDialog={closeOrderSearchDialog} />
+            <OpSearchDialog isOpen={showOpSearchDialog} closeDialog={closeOpSearchDialog} />
+            <ItemSearchDialog isOpen={showItemSearchDialog} closeDialog={closeItemSearchDialog} />
+            <SerialSearchDialog isOpen={showSerialSearchDialog} closeDialog={closeSerialSearchDialog} />
         </>
     );
 }
