@@ -4,7 +4,7 @@ import "@ui5/webcomponents/dist/Tab";
 import "@ui5/webcomponents/dist/TabSeparator";
 import { Page } from '@ui5/webcomponents-react';
 import { Button, RadioButton, Input, Label, FlexBox, Icon } from '@ui5/webcomponents-react';
-import { WorkSelectionDialog } from "components/WorkSelectionDialog"
+import { OASelectDialog } from "components/OASelectDialog"
 import { OrderSearchDialog } from 'components/OrderSearchDialog'
 import { OpSearchDialog } from 'components/OpSearchDialog'
 import { ItemSearchDialog } from 'components/ItemSearchDialog'
@@ -28,33 +28,29 @@ const PAGE_SIZE = 15;
 
 export default function WorkSelectionPage() {
 
-    const [showWorkSelectionDialog, setShowWorkSelectionDialog] = useState(false)
+    const [showOASelectDialog, setShowOASelectDialog] = useState(false)
     const closeWorkSelectionDialog = () => {
-        setShowWorkSelectionDialog(false);
+        setShowOASelectDialog(false);
     }
     //指図検索ヘルプの変数定義
-    // const [showOrderSearchHelpModal, setShowOrderSearchHelpModal] = useState(false)
     const [showOrderSearchDialog, setShowOrderSearchDialog] = useState(false)
     const closeOrderSearchDialog = () => {
         setShowOrderSearchDialog(false);
     }
 
     //作業検索ヘルプの変数定義
-    // const [showOpSearchHelpModal, setShowOpSearchHelpModal] = useState(false)
     const [showOpSearchDialog, setShowOpSearchDialog] = useState(false)
     const closeOpSearchDialog = () => {
         setShowOpSearchDialog(false);
     }
 
     //品目検索ヘルプの変数定義
-    // const [showItemSearchHelpModal, setShowItemSearchHelpModal] = useState(false)
     const [showItemSearchDialog, setShowItemSearchDialog] = useState(false)
     const closeItemSearchDialog = () => {
         setShowItemSearchDialog(false);
     }
 
     //シリアル番号検索ヘルプの変数定義
-    // const [showSerialSearchHelpModal, setShowSerialSearchHelpModal] = useState(false)
     const [showSerialSearchDialog, setShowSerialSearchDialog] = useState(false)
     const closeSerialSearchDialog = () => {
         setShowSerialSearchDialog(false);
@@ -120,9 +116,9 @@ export default function WorkSelectionPage() {
                     >    
                     </Input>
                 </FlexBox>
-                <Button onClick={() => setShowWorkSelectionDialog(true)}>作業開始</Button>
+                <Button onClick={() => setShowOASelectDialog(true)}>作業開始</Button>
             </Page>
-            <WorkSelectionDialog isOpen={showWorkSelectionDialog} closeDialog={closeWorkSelectionDialog} />
+            <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} />
             <OrderSearchDialog isOpen={showOrderSearchDialog} closeDialog={closeOrderSearchDialog}/>
             <OpSearchDialog isOpen={showOpSearchDialog} closeDialog={closeOpSearchDialog}/>
             <ItemSearchDialog isOpen={showItemSearchDialog} closeDialog={closeItemSearchDialog}/>

@@ -3,7 +3,7 @@ import { Button, Dialog, List, Table } from '@ui5/webcomponents-react';
 import { StandardListItem } from '@ui5/webcomponents-react';
 import { TableRow, TableCell, TableColumn, Label } from '@ui5/webcomponents-react';
 
-export const WorkSelectionDialog = ({ isOpen, closeDialog }) => {
+export const SerialnoSelectDialog = ({ isOpen, closeDialog }) => {
     return (
         <>
             <Dialog open={isOpen}
