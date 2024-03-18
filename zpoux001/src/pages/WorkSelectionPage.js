@@ -256,7 +256,7 @@ export default function WorkSelectionPage() {
 
 
                 {/* Toolbarを用いた実装 */}
-                <Toolbar numberOfAlwaysVisibleItems={1} toolbarStyle="Clear" style={{'background-color': 'blue'}}>
+                <Toolbar numberOfAlwaysVisibleItems={1} toolbarStyle="Clear">
                     {/* <FlexBox justifyContent="Center"> */}
                         <RadioButton
                             name="mode"
