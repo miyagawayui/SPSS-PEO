@@ -1,0 +1,67 @@
+---
+_schema-version: '3.1'
+ID: ZPOBS001
+version: 1.0.0-SNAPSHOT
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install --production
+        - npx -p @sap/cds-dk cds build --production
+
+modules:
+  - name: ZPOBS001-srv
+    type: java
+    path: srv
+    parameters:
+      buildpack: sap_java_buildpack
+    properties:
+      # SPRING_PROFILES_ACTIVE: default
+      SET_LOGGING_LEVEL: '{ROOT: INFO, com.sap.cloud.sdk: INFO, package.to.log: DEBUG}'
+      JBP_CONFIG_COMPONENTS: "jres: ['com.sap.xs.java.buildpack.jre.SAPMachineJRE']"
+      JBP_CONFIG_SAP_MACHINE_JRE: '{ use_offline_repository: false, version: 17.+ }'
+    build-parameters:
+      builder: custom
+      commands: [ mvn clean package ]
+      # commands:
+      #   - mvn clean package -DskipTests=true
+      build-result: target/*-exec.jar
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+    - name: ZPOBS001-dest
+    - name: ZPOBS001-conn
+    - name: ZPOBS001-uaa
+
+resources:
+- name: ZPOBS001-dest
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
+- name: ZPOBS001-conn
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: connectivity
+    service-plan: lite
+# - name: ZPOBS001-uaa
+#   type: org.cloudfoundry.managed-service
+#   parameters:
+#      service: xsuaa
+#      service-plan: application
+#      path: ./xs-security.json 
+- name: ZPOBS001-uaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json     
+    service: xsuaa
+    service-name: ZPOBS001-uaa
+    service-plan: "application"
+    config:
+    tenant-mode: dedicated
+    scope: [{"name": "$XSAPPNAME.Viewer","description": "Viewer"}]
