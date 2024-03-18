@@ -1,0 +1,911 @@
+{
+  "namespace": "cloudsdk.ZPOBS001",
+  "definitions": {
+    "cloudsdk.ZPOBS001.ListOpActyWorklistOfCurUsrTP": {
+      "kind": "entity",
+      "doc": "作業一覧　取得用",
+      "elements": {
+        "OpActyNtwkElement": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkInstance": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkElementExternalID": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "OperationActivityName": {
+          "type": "cds.String",
+          "length": 60
+        },
+        "StatusAndActionSchemaStatus": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "SASStatusName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ManufacturingOrderOperation": {
+          "type": "cds.String",
+          "length": 4
+        },
+        "MfgOrderOperationText": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ManufacturingOrder": {
+          "type": "cds.String",
+          "length": 12
+        },
+        "ManufacturingOrderText": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "Material": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "MaterialName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "OpLtstSchedldExecStrtDteTme": {
+          "type": "cds.DateTime"
+        },
+        "OpActyIsSeldForRtactvPostg": {
+          "type": "cds.Boolean"
+        },
+        "NrOfOpActyUserAssignments": {
+          "type": "cds.Integer"
+        },
+        "UserDescription": {
+          "type": "cds.String",
+          "length": 80
+        },
+        "ProductionHold": {
+          "type": "cds.Integer64"
+        },
+        "OpActyHasMissingComponents": {
+          "type": "cds.Boolean"
+        },
+        "NrOfOpActyTeamAssignments": {
+          "type": "cds.Integer"
+        },
+        "TeamName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ManufacturingOrderImportance": {
+          "type": "cds.String",
+          "length": 1
+        },
+        "OrderIsTechnicallyCompleted": {
+          "type": "cds.Boolean"
+        },
+        "SASStatusCategory": {
+          "type": "cds.Int16"
+        },
+        "SASStatusCategoryName": {
+          "type": "cds.String",
+          "length": 60
+        },
+        "OperationExecutionAvailableQty": {
+          "type": "cds.Decimal"
+        },
+        "ProductionUnit": {
+          "type": "cds.String",
+          "length": 3
+        },
+        "OpActyExpdExecutionDuration": {
+          "type": "cds.Decimal"
+        },
+        "DurationUnit": {
+          "type": "cds.String",
+          "length": 3
+        },
+        "OpActyExpdExecutionLaborDurn": {
+          "type": "cds.Decimal"
+        },
+        "OpActyNtwkSegmentType": {
+          "type": "cds.String",
+          "length": 1
+        },
+        "OpActyNtwkSegmentTypeText": {
+          "type": "cds.String",
+          "length": 60
+        },
+        "WorkCenter": {
+          "type": "cds.String",
+          "length": 8
+        },
+        "WorkCenterText": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ProductionPlant": {
+          "type": "cds.String",
+          "length": 4
+        },
+        "OpLtstSchedldExecEndDteTme": {
+          "type": "cds.DateTime"
+        },
+        "OpActualExecutionStartDateTime": {
+          "type": "cds.DateTime"
+        },
+        "OpActualExecutionEndDateTime": {
+          "type": "cds.DateTime"
+        },
+        "EffectivityParameterDesc": {
+          "type": "cds.String",
+          "length": 256
+        },
+        "MfgOpActyExecutionPriority": {
+          "type": "cds.Int16"
+        },
+        "ZZ1_INCIDENTAL_ITEM_1_MOA": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ZZ1_INCIDENTAL_ITEM_2_MOA": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ZZ1_INCIDENTAL_ITEM_3_MOA": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ZZ1_INCIDENTAL_ITEM_4_MOA": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ZZ1_INCIDENTAL_ITEM_5_MOA": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ZZ1_ACTGRP_ID_MOA": {
+          "type": "cds.String",
+          "length": 20
+        },
+        "ZZ1_ACTGRP_NM_MOA": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ZZ1_KMGRP_ID_MOA": {
+          "type": "cds.String",
+          "length": 20
+        },
+        "ZZ1_KMGRP_NM_MOA": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ZZ1_ASSIGN_TEMPLATE_ID_MOA": {
+          "type": "cds.String",
+          "length": 20
+        },
+        "ZZ1_ASSIGN_TEMPLATE_NM_MOA": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ZZ1_TARGET_TIME_MOA": {
+          "type": "cds.DateTime"
+        },
+        "OpActyExpdExecDurnInSeconds": {
+          "type": "cds.Integer"
+        },
+        "OpActyConfIsSFIBased": {
+          "type": "cds.String",
+          "length": 1
+        },
+        "RespyMgmtTeamID": {
+          "type": "cds.String",
+          "length": 8
+        },
+        "OperationActivityHasProdnHold": {
+          "type": "cds.Boolean"
+        },
+        "Start_rtactv_ac": {
+          "type": "cds.Boolean"
+        },
+        "NumberOfActiveShopFloorItems": {
+          "type": "cds.Integer"
+        }
+      }
+    },
+    "cloudsdk.ZPOBS001.CShopFloorItemAtOpActy": {
+      "kind": "entity",
+      "doc": "作業活動内容　取得用",
+      "elements": {
+        "OpActyNtwkElement": {
+          "key": true,
+          "type": "cds.String",
+          "length": 10
+        },
+        "OpActyNtwkInstance": {
+          "key": true,
+          "type": "cds.String",
+          "length": 10
+        },
+        "ShopFloorItem": {
+          "key": true,
+          "type": "cds.String",
+          "length": 10
+        },
+        "MfgWorkInstructionContent": {
+          "type": "cds.String",
+          "length": 1000
+        }
+      }
+    },
+    "cloudsdk.ZPOBS001.SerialNumberList": {
+      "kind": "entity",
+      "doc": "シリアル番号一覧 取得用",
+      "elements": {
+        "OpActyNtwkElement": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkInstance": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "ShopFloorItem": {
+          "key": true,
+          "type": "cds.Integer64"
+        },
+        "SerialNumber": {
+          "type": "cds.String",
+          "length": 18
+        },
+        "StatusAndActionSchemaStatus": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "OpActySFIGroupName": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ManufacturingOrder": {
+          "type": "cds.String",
+          "length": 12
+        },
+        "ManufacturingOrderOperation": {
+          "type": "cds.String",
+          "length": 4
+        },
+        "MfgOrderOperationText": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "OpActyNtwkElementExternalID": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "OperationActivityName": {
+          "type": "cds.String",
+          "length": 60
+        },
+        "SASStatusCategory": {
+          "type": "cds.Int16"
+        },
+        "SASStatusName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "SASStatusCriticality": {
+          "type": "cds.Int16"
+        },
+        "Assemblesficomp_ac": {
+          "type": "cds.Boolean"
+        }
+      }
+    },
+    "cloudsdk.ZPOBS001.ShopFloorItemAtOpActySerial": {
+      "kind": "entity",
+      "doc": "作業活動内容（シリアル番号） 取得用",
+      "elements": {
+        "OpActyNtwkElement": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkInstance": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "ShopFloorItem": {
+          "key": true,
+          "type": "cds.Integer64"
+        },
+        "SerialNumber": {
+          "type": "cds.String",
+          "length": 18
+        },
+        "StatusAndActionSchemaStatus": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "OpActySFIGroupName": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ManufacturingOrder": {
+          "type": "cds.String",
+          "length": 12
+        },
+        "ManufacturingOrderOperation": {
+          "type": "cds.String",
+          "length": 4
+        },
+        "MfgOrderOperationText": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "OpActyNtwkElementExternalID": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "SASStatusName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "MfgWorkInstructionContent": {
+          "type": "cds.String",
+          "length": 3000
+        }
+      }
+    },
+    "cloudsdk.ZPOBS001.ProcgExecOperationActivityLot": {
+      "kind": "entity",
+      "doc": "作業活動内容（ロット管理品） 取得用",
+      "elements": {
+        "OpActyNtwkElement": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkInstance": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "StatusAndActionSchemaStatus": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ManufacturingOrder": {
+          "type": "cds.String",
+          "length": 12
+        },
+        "ManufacturingOrderOperation": {
+          "type": "cds.String",
+          "length": 4
+        },
+        "MfgOrderOperationText": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "OpActyNtwkElementExternalID": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "SASStatusName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "MfgWorkInstructionContent": {
+          "type": "cds.String",
+          "length": 3000
+        }
+      }
+    },
+    "cloudsdk.ZPOBS001.SerialWorkStart": {
+      "kind": "entity",
+      "doc": "シリアル番号\n作業開始　取得用",
+      "elements": {
+        "OpActyNtwkElement": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkInstance": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "ShopFloorItem": {
+          "key": true,
+          "type": "cds.Integer64"
+        },
+        "SASStatusCategory": {
+          "key": true,
+          "type": "cds.String",
+          "length": 40
+        }
+      }
+    },
+    "cloudsdk.ZPOBS001.LotWorkStart": {
+      "kind": "entity",
+      "doc": "ロット番号\n作業開始　取得用",
+      "elements": {
+        "OpActyNtwkElement": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkInstance": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "SASStatusCategory": {
+          "key": true,
+          "type": "cds.String",
+          "length": 40
+        }
+      }
+    },
+    "cloud.sdk.capng": {
+      "@source": "services.cds",
+      "kind": "service"
+    },
+    "cloud.sdk.capng.COpActyWorklistOfCurUsrTP": {
+      "kind": "entity",
+      "doc": "作業一覧　取得用",
+      "projection": {
+        "from": {
+          "ref": [
+            "cloudsdk.ZPOBS001.ListOpActyWorklistOfCurUsrTP"
+          ]
+        }
+      },
+      "elements": {
+        "OpActyNtwkElement": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkInstance": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkElementExternalID": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "OperationActivityName": {
+          "type": "cds.String",
+          "length": 60
+        },
+        "StatusAndActionSchemaStatus": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "SASStatusName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ManufacturingOrderOperation": {
+          "type": "cds.String",
+          "length": 4
+        },
+        "MfgOrderOperationText": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ManufacturingOrder": {
+          "type": "cds.String",
+          "length": 12
+        },
+        "ManufacturingOrderText": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "Material": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "MaterialName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "OpLtstSchedldExecStrtDteTme": {
+          "type": "cds.DateTime"
+        },
+        "OpActyIsSeldForRtactvPostg": {
+          "type": "cds.Boolean"
+        },
+        "NrOfOpActyUserAssignments": {
+          "type": "cds.Integer"
+        },
+        "UserDescription": {
+          "type": "cds.String",
+          "length": 80
+        },
+        "ProductionHold": {
+          "type": "cds.Integer64"
+        },
+        "OpActyHasMissingComponents": {
+          "type": "cds.Boolean"
+        },
+        "NrOfOpActyTeamAssignments": {
+          "type": "cds.Integer"
+        },
+        "TeamName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ManufacturingOrderImportance": {
+          "type": "cds.String",
+          "length": 1
+        },
+        "OrderIsTechnicallyCompleted": {
+          "type": "cds.Boolean"
+        },
+        "SASStatusCategory": {
+          "type": "cds.Int16"
+        },
+        "SASStatusCategoryName": {
+          "type": "cds.String",
+          "length": 60
+        },
+        "OperationExecutionAvailableQty": {
+          "type": "cds.Decimal"
+        },
+        "ProductionUnit": {
+          "type": "cds.String",
+          "length": 3
+        },
+        "OpActyExpdExecutionDuration": {
+          "type": "cds.Decimal"
+        },
+        "DurationUnit": {
+          "type": "cds.String",
+          "length": 3
+        },
+        "OpActyExpdExecutionLaborDurn": {
+          "type": "cds.Decimal"
+        },
+        "OpActyNtwkSegmentType": {
+          "type": "cds.String",
+          "length": 1
+        },
+        "OpActyNtwkSegmentTypeText": {
+          "type": "cds.String",
+          "length": 60
+        },
+        "WorkCenter": {
+          "type": "cds.String",
+          "length": 8
+        },
+        "WorkCenterText": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ProductionPlant": {
+          "type": "cds.String",
+          "length": 4
+        },
+        "OpLtstSchedldExecEndDteTme": {
+          "type": "cds.DateTime"
+        },
+        "OpActualExecutionStartDateTime": {
+          "type": "cds.DateTime"
+        },
+        "OpActualExecutionEndDateTime": {
+          "type": "cds.DateTime"
+        },
+        "EffectivityParameterDesc": {
+          "type": "cds.String",
+          "length": 256
+        },
+        "MfgOpActyExecutionPriority": {
+          "type": "cds.Int16"
+        },
+        "ZZ1_INCIDENTAL_ITEM_1_MOA": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ZZ1_INCIDENTAL_ITEM_2_MOA": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ZZ1_INCIDENTAL_ITEM_3_MOA": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ZZ1_INCIDENTAL_ITEM_4_MOA": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ZZ1_INCIDENTAL_ITEM_5_MOA": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ZZ1_ACTGRP_ID_MOA": {
+          "type": "cds.String",
+          "length": 20
+        },
+        "ZZ1_ACTGRP_NM_MOA": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ZZ1_KMGRP_ID_MOA": {
+          "type": "cds.String",
+          "length": 20
+        },
+        "ZZ1_KMGRP_NM_MOA": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ZZ1_ASSIGN_TEMPLATE_ID_MOA": {
+          "type": "cds.String",
+          "length": 20
+        },
+        "ZZ1_ASSIGN_TEMPLATE_NM_MOA": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ZZ1_TARGET_TIME_MOA": {
+          "type": "cds.DateTime"
+        },
+        "OpActyExpdExecDurnInSeconds": {
+          "type": "cds.Integer"
+        },
+        "OpActyConfIsSFIBased": {
+          "type": "cds.String",
+          "length": 1
+        },
+        "RespyMgmtTeamID": {
+          "type": "cds.String",
+          "length": 8
+        },
+        "OperationActivityHasProdnHold": {
+          "type": "cds.Boolean"
+        },
+        "Start_rtactv_ac": {
+          "type": "cds.Boolean"
+        },
+        "NumberOfActiveShopFloorItems": {
+          "type": "cds.Integer"
+        }
+      }
+    },
+    "cloud.sdk.capng.SerialWorkStart": {
+      "kind": "entity",
+      "doc": "シリアル番号\n作業開始　取得用",
+      "projection": {
+        "from": {
+          "ref": [
+            "cloudsdk.ZPOBS001.SerialWorkStart"
+          ]
+        }
+      },
+      "elements": {
+        "OpActyNtwkElement": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkInstance": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "ShopFloorItem": {
+          "key": true,
+          "type": "cds.Integer64"
+        },
+        "SASStatusCategory": {
+          "key": true,
+          "type": "cds.String",
+          "length": 40
+        }
+      }
+    },
+    "cloud.sdk.capng.LotWorkStart": {
+      "kind": "entity",
+      "doc": "ロット番号\n作業開始　取得用",
+      "projection": {
+        "from": {
+          "ref": [
+            "cloudsdk.ZPOBS001.LotWorkStart"
+          ]
+        }
+      },
+      "elements": {
+        "OpActyNtwkElement": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkInstance": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "SASStatusCategory": {
+          "key": true,
+          "type": "cds.String",
+          "length": 40
+        }
+      }
+    },
+    "cloud.sdk.capng.SerialNumberList": {
+      "kind": "entity",
+      "doc": "シリアル番号一覧 取得用",
+      "projection": {
+        "from": {
+          "ref": [
+            "cloudsdk.ZPOBS001.SerialNumberList"
+          ]
+        }
+      },
+      "elements": {
+        "OpActyNtwkElement": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkInstance": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "ShopFloorItem": {
+          "key": true,
+          "type": "cds.Integer64"
+        },
+        "SerialNumber": {
+          "type": "cds.String",
+          "length": 18
+        },
+        "StatusAndActionSchemaStatus": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "OpActySFIGroupName": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ManufacturingOrder": {
+          "type": "cds.String",
+          "length": 12
+        },
+        "ManufacturingOrderOperation": {
+          "type": "cds.String",
+          "length": 4
+        },
+        "MfgOrderOperationText": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "OpActyNtwkElementExternalID": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "OperationActivityName": {
+          "type": "cds.String",
+          "length": 60
+        },
+        "SASStatusCategory": {
+          "type": "cds.Int16"
+        },
+        "SASStatusName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "SASStatusCriticality": {
+          "type": "cds.Int16"
+        },
+        "Assemblesficomp_ac": {
+          "type": "cds.Boolean"
+        }
+      }
+    },
+    "cloud.sdk.capng.ShopFloorItemAtOpActySerial": {
+      "kind": "entity",
+      "doc": "作業活動内容（シリアル番号） 取得用",
+      "projection": {
+        "from": {
+          "ref": [
+            "cloudsdk.ZPOBS001.ShopFloorItemAtOpActySerial"
+          ]
+        }
+      },
+      "elements": {
+        "OpActyNtwkElement": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkInstance": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "ShopFloorItem": {
+          "key": true,
+          "type": "cds.Integer64"
+        },
+        "SerialNumber": {
+          "type": "cds.String",
+          "length": 18
+        },
+        "StatusAndActionSchemaStatus": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "OpActySFIGroupName": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "ManufacturingOrder": {
+          "type": "cds.String",
+          "length": 12
+        },
+        "ManufacturingOrderOperation": {
+          "type": "cds.String",
+          "length": 4
+        },
+        "MfgOrderOperationText": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "OpActyNtwkElementExternalID": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "SASStatusName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "MfgWorkInstructionContent": {
+          "type": "cds.String",
+          "length": 3000
+        }
+      }
+    },
+    "cloud.sdk.capng.ProcgExecOperationActivityLot": {
+      "kind": "entity",
+      "doc": "作業活動内容（ロット管理品） 取得用",
+      "projection": {
+        "from": {
+          "ref": [
+            "cloudsdk.ZPOBS001.ProcgExecOperationActivityLot"
+          ]
+        }
+      },
+      "elements": {
+        "OpActyNtwkElement": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "OpActyNtwkInstance": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "StatusAndActionSchemaStatus": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "ManufacturingOrder": {
+          "type": "cds.String",
+          "length": 12
+        },
+        "ManufacturingOrderOperation": {
+          "type": "cds.String",
+          "length": 4
+        },
+        "MfgOrderOperationText": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "OpActyNtwkElementExternalID": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "SASStatusName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "MfgWorkInstructionContent": {
+          "type": "cds.String",
+          "length": 3000
+        }
+      }
+    }
+  },
+  "$version": "2.0",
+  "meta": {
+    "creator": "CDS Compiler v4.4.0",
+    "flavor": "inferred"
+  }
+}

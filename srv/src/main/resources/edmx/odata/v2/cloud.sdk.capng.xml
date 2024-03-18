@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:DataServices m:DataServiceVersion="2.0">
+    <Schema Namespace="cloud.sdk.capng" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+        <EntitySet Name="COpActyWorklistOfCurUsrTP" EntityType="cloud.sdk.capng.COpActyWorklistOfCurUsrTP"/>
+        <EntitySet Name="SerialWorkStart" EntityType="cloud.sdk.capng.SerialWorkStart"/>
+        <EntitySet Name="LotWorkStart" EntityType="cloud.sdk.capng.LotWorkStart"/>
+        <EntitySet Name="SerialNumberList" EntityType="cloud.sdk.capng.SerialNumberList"/>
+        <EntitySet Name="ShopFloorItemAtOpActySerial" EntityType="cloud.sdk.capng.ShopFloorItemAtOpActySerial"/>
+        <EntitySet Name="ProcgExecOperationActivityLot" EntityType="cloud.sdk.capng.ProcgExecOperationActivityLot"/>
+      </EntityContainer>
+      <EntityType Name="COpActyWorklistOfCurUsrTP">
+        <Key>
+          <PropertyRef Name="OpActyNtwkElement"/>
+          <PropertyRef Name="OpActyNtwkInstance"/>
+        </Key>
+        <Property Name="OpActyNtwkElement" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="OpActyNtwkInstance" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="OpActyNtwkElementExternalID" Type="Edm.String" MaxLength="10"/>
+        <Property Name="OperationActivityName" Type="Edm.String" MaxLength="60"/>
+        <Property Name="StatusAndActionSchemaStatus" Type="Edm.String" MaxLength="40"/>
+        <Property Name="SASStatusName" Type="Edm.String" MaxLength="40"/>
+        <Property Name="ManufacturingOrderOperation" Type="Edm.String" MaxLength="4"/>
+        <Property Name="MfgOrderOperationText" Type="Edm.String" MaxLength="40"/>
+        <Property Name="ManufacturingOrder" Type="Edm.String" MaxLength="12"/>
+        <Property Name="ManufacturingOrderText" Type="Edm.String" MaxLength="40"/>
+        <Property Name="Material" Type="Edm.String" MaxLength="40"/>
+        <Property Name="MaterialName" Type="Edm.String" MaxLength="40"/>
+        <Property Name="OpLtstSchedldExecStrtDteTme" Type="Edm.DateTimeOffset"/>
+        <Property Name="OpActyIsSeldForRtactvPostg" Type="Edm.Boolean"/>
+        <Property Name="NrOfOpActyUserAssignments" Type="Edm.Int32"/>
+        <Property Name="UserDescription" Type="Edm.String" MaxLength="80"/>
+        <Property Name="ProductionHold" Type="Edm.Int64"/>
+        <Property Name="OpActyHasMissingComponents" Type="Edm.Boolean"/>
+        <Property Name="NrOfOpActyTeamAssignments" Type="Edm.Int32"/>
+        <Property Name="TeamName" Type="Edm.String" MaxLength="40"/>
+        <Property Name="ManufacturingOrderImportance" Type="Edm.String" MaxLength="1"/>
+        <Property Name="OrderIsTechnicallyCompleted" Type="Edm.Boolean"/>
+        <Property Name="SASStatusCategory" Type="Edm.Int16"/>
+        <Property Name="SASStatusCategoryName" Type="Edm.String" MaxLength="60"/>
+        <Property Name="OperationExecutionAvailableQty" Type="Edm.Decimal" sap:variable-scale="true"/>
+        <Property Name="ProductionUnit" Type="Edm.String" MaxLength="3"/>
+        <Property Name="OpActyExpdExecutionDuration" Type="Edm.Decimal" sap:variable-scale="true"/>
+        <Property Name="DurationUnit" Type="Edm.String" MaxLength="3"/>
+        <Property Name="OpActyExpdExecutionLaborDurn" Type="Edm.Decimal" sap:variable-scale="true"/>
+        <Property Name="OpActyNtwkSegmentType" Type="Edm.String" MaxLength="1"/>
+        <Property Name="OpActyNtwkSegmentTypeText" Type="Edm.String" MaxLength="60"/>
+        <Property Name="WorkCenter" Type="Edm.String" MaxLength="8"/>
+        <Property Name="WorkCenterText" Type="Edm.String" MaxLength="40"/>
+        <Property Name="ProductionPlant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="OpLtstSchedldExecEndDteTme" Type="Edm.DateTimeOffset"/>
+        <Property Name="OpActualExecutionStartDateTime" Type="Edm.DateTimeOffset"/>
+        <Property Name="OpActualExecutionEndDateTime" Type="Edm.DateTimeOffset"/>
+        <Property Name="EffectivityParameterDesc" Type="Edm.String" MaxLength="256"/>
+        <Property Name="MfgOpActyExecutionPriority" Type="Edm.Int16"/>
+        <Property Name="ZZ1_INCIDENTAL_ITEM_1_MOA" Type="Edm.String" MaxLength="100"/>
+        <Property Name="ZZ1_INCIDENTAL_ITEM_2_MOA" Type="Edm.String" MaxLength="100"/>
+        <Property Name="ZZ1_INCIDENTAL_ITEM_3_MOA" Type="Edm.String" MaxLength="100"/>
+        <Property Name="ZZ1_INCIDENTAL_ITEM_4_MOA" Type="Edm.String" MaxLength="100"/>
+        <Property Name="ZZ1_INCIDENTAL_ITEM_5_MOA" Type="Edm.String" MaxLength="100"/>
+        <Property Name="ZZ1_ACTGRP_ID_MOA" Type="Edm.String" MaxLength="20"/>
+        <Property Name="ZZ1_ACTGRP_NM_MOA" Type="Edm.String" MaxLength="40"/>
+        <Property Name="ZZ1_KMGRP_ID_MOA" Type="Edm.String" MaxLength="20"/>
+        <Property Name="ZZ1_KMGRP_NM_MOA" Type="Edm.String" MaxLength="40"/>
+        <Property Name="ZZ1_ASSIGN_TEMPLATE_ID_MOA" Type="Edm.String" MaxLength="20"/>
+        <Property Name="ZZ1_ASSIGN_TEMPLATE_NM_MOA" Type="Edm.String" MaxLength="40"/>
+        <Property Name="ZZ1_TARGET_TIME_MOA" Type="Edm.DateTimeOffset"/>
+        <Property Name="OpActyExpdExecDurnInSeconds" Type="Edm.Int32"/>
+        <Property Name="OpActyConfIsSFIBased" Type="Edm.String" MaxLength="1"/>
+        <Property Name="RespyMgmtTeamID" Type="Edm.String" MaxLength="8"/>
+        <Property Name="OperationActivityHasProdnHold" Type="Edm.Boolean"/>
+        <Property Name="Start_rtactv_ac" Type="Edm.Boolean"/>
+        <Property Name="NumberOfActiveShopFloorItems" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="SerialWorkStart">
+        <Key>
+          <PropertyRef Name="OpActyNtwkElement"/>
+          <PropertyRef Name="OpActyNtwkInstance"/>
+          <PropertyRef Name="ShopFloorItem"/>
+          <PropertyRef Name="SASStatusCategory"/>
+        </Key>
+        <Property Name="OpActyNtwkElement" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="OpActyNtwkInstance" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="ShopFloorItem" Type="Edm.Int64" Nullable="false"/>
+        <Property Name="SASStatusCategory" Type="Edm.String" MaxLength="40" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="LotWorkStart">
+        <Key>
+          <PropertyRef Name="OpActyNtwkElement"/>
+          <PropertyRef Name="OpActyNtwkInstance"/>
+          <PropertyRef Name="SASStatusCategory"/>
+        </Key>
+        <Property Name="OpActyNtwkElement" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="OpActyNtwkInstance" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="SASStatusCategory" Type="Edm.String" MaxLength="40" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="SerialNumberList">
+        <Key>
+          <PropertyRef Name="OpActyNtwkElement"/>
+          <PropertyRef Name="OpActyNtwkInstance"/>
+          <PropertyRef Name="ShopFloorItem"/>
+        </Key>
+        <Property Name="OpActyNtwkElement" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="OpActyNtwkInstance" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="ShopFloorItem" Type="Edm.Int64" Nullable="false"/>
+        <Property Name="SerialNumber" Type="Edm.String" MaxLength="18"/>
+        <Property Name="StatusAndActionSchemaStatus" Type="Edm.String" MaxLength="40"/>
+        <Property Name="OpActySFIGroupName" Type="Edm.String" MaxLength="100"/>
+        <Property Name="ManufacturingOrder" Type="Edm.String" MaxLength="12"/>
+        <Property Name="ManufacturingOrderOperation" Type="Edm.String" MaxLength="4"/>
+        <Property Name="MfgOrderOperationText" Type="Edm.String" MaxLength="40"/>
+        <Property Name="OpActyNtwkElementExternalID" Type="Edm.String" MaxLength="10"/>
+        <Property Name="OperationActivityName" Type="Edm.String" MaxLength="60"/>
+        <Property Name="SASStatusCategory" Type="Edm.Int16"/>
+        <Property Name="SASStatusName" Type="Edm.String" MaxLength="40"/>
+        <Property Name="SASStatusCriticality" Type="Edm.Int16"/>
+        <Property Name="Assemblesficomp_ac" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="ShopFloorItemAtOpActySerial">
+        <Key>
+          <PropertyRef Name="OpActyNtwkElement"/>
+          <PropertyRef Name="OpActyNtwkInstance"/>
+          <PropertyRef Name="ShopFloorItem"/>
+        </Key>
+        <Property Name="OpActyNtwkElement" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="OpActyNtwkInstance" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="ShopFloorItem" Type="Edm.Int64" Nullable="false"/>
+        <Property Name="SerialNumber" Type="Edm.String" MaxLength="18"/>
+        <Property Name="StatusAndActionSchemaStatus" Type="Edm.String" MaxLength="40"/>
+        <Property Name="OpActySFIGroupName" Type="Edm.String" MaxLength="100"/>
+        <Property Name="ManufacturingOrder" Type="Edm.String" MaxLength="12"/>
+        <Property Name="ManufacturingOrderOperation" Type="Edm.String" MaxLength="4"/>
+        <Property Name="MfgOrderOperationText" Type="Edm.String" MaxLength="40"/>
+        <Property Name="OpActyNtwkElementExternalID" Type="Edm.String" MaxLength="10"/>
+        <Property Name="SASStatusName" Type="Edm.String" MaxLength="40"/>
+        <Property Name="MfgWorkInstructionContent" Type="Edm.String" MaxLength="3000"/>
+      </EntityType>
+      <EntityType Name="ProcgExecOperationActivityLot">
+        <Key>
+          <PropertyRef Name="OpActyNtwkElement"/>
+          <PropertyRef Name="OpActyNtwkInstance"/>
+        </Key>
+        <Property Name="OpActyNtwkElement" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="OpActyNtwkInstance" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="StatusAndActionSchemaStatus" Type="Edm.String" MaxLength="40"/>
+        <Property Name="ManufacturingOrder" Type="Edm.String" MaxLength="12"/>
+        <Property Name="ManufacturingOrderOperation" Type="Edm.String" MaxLength="4"/>
+        <Property Name="MfgOrderOperationText" Type="Edm.String" MaxLength="40"/>
+        <Property Name="OpActyNtwkElementExternalID" Type="Edm.String" MaxLength="10"/>
+        <Property Name="SASStatusName" Type="Edm.String" MaxLength="40"/>
+        <Property Name="MfgWorkInstructionContent" Type="Edm.String" MaxLength="3000"/>
+      </EntityType>
+      <Annotations Target="cloud.sdk.capng.COpActyWorklistOfCurUsrTP" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Core.Description" String="作業一覧　取得用"/>
+      </Annotations>
+      <Annotations Target="cloud.sdk.capng.SerialWorkStart" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Core.Description" String="シリアル番号&#xA;作業開始　取得用"/>
+      </Annotations>
+      <Annotations Target="cloud.sdk.capng.LotWorkStart" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Core.Description" String="ロット番号&#xA;作業開始　取得用"/>
+      </Annotations>
+      <Annotations Target="cloud.sdk.capng.SerialNumberList" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Core.Description" String="シリアル番号一覧 取得用"/>
+      </Annotations>
+      <Annotations Target="cloud.sdk.capng.ShopFloorItemAtOpActySerial" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Core.Description" String="作業活動内容（シリアル番号） 取得用"/>
+      </Annotations>
+      <Annotations Target="cloud.sdk.capng.ProcgExecOperationActivityLot" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Core.Description" String="作業活動内容（ロット管理品） 取得用"/>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

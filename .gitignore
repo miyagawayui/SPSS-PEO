@@ -1,5 +1,4 @@
 **/gen/
-**/edmx/
 *.db
 *.sqlite
 schema*.sql
