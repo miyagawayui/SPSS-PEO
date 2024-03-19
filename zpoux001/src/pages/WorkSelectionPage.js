@@ -77,59 +77,7 @@ export default function WorkSelectionPage() {
                     height: '100svh'
                 }}
             >
-                {/* <FlexBox justifyContent="Center">
-                    <RadioButton name="mode" text="指図/作業検索" />
-                    <RadioButton name="mode" text="品目/シリアル番号検索" />
-                </FlexBox>
-                <Label>指図/作業検索</Label>
-                <FlexBox justifyContent="Center" alignItems="Center">
-                    <Label>指図：</Label>
-                    <Input icon={
-                        <Icon
-                            name="value-help"
-                            onClick={() => setShowOrderSearchDialog(true)}>
-                        </Icon>}
-                        maxlength={12}
-                        type="Number"
-                    >
-                    </Input>
-                    <Label>作業：</Label>
-                    <Input icon={
-                        <Icon
-                            name="value-help"
-                            onClick={() => setShowOpSearchDialog(true)}>
-                        </Icon>}
-                        maxlength={4}
-                        type="Number"
-                    >
-                    </Input>
-                </FlexBox>
-                <Label>品目・シリアル番号検索</Label>
-                <FlexBox justifyContent="Center" alignItems="Center">
-                    <Label>品目：</Label>
-                    <Input icon={
-                        <Icon
-                            name="value-help"
-                            onClick={() => setShowItemSearchDialog(true)}>
-                        </Icon>}
-                        maxlength={40}
-                    >
-                    </Input>
-                    <Label>シリアル番号：</Label>
-                    <Input icon={
-                        <Icon
-                            name="value-help"
-                            onClick={() => setShowSerialSearchDialog(true)}>
-                        </Icon>}
-                        maxlength={18}
-                    >
-                    </Input>
-                </FlexBox>
-                <Button onClick={() => setShowOASelectDialog(true)}>作業開始</Button> */}
-
-
-                {/* ResponsiveGridLayoutを用いた実装 */}
-                {/* <ResponsiveGridLayout columnsXL={12} columnSpanXL={2} columnSpanL={2} columnSpanM={3} columnSpanS={12} className="grid-row">
+                <ResponsiveGridLayout columnsXL={12} columnSpanXL={2} columnSpanL={2} columnSpanM={3} columnSpanS={12} className="grid-row">
                     <div></div>
                     <div></div>
                     <div>
@@ -141,7 +89,6 @@ export default function WorkSelectionPage() {
                 </ResponsiveGridLayout>
                 <ResponsiveGridLayout columnsXL={12} columnSpanXL={2} columnSpanL={2} columnSpanM={6} columnSpanS={12} className="grid-row">
                     <div style={{
-                        // background: 'var(--sapAccentColor1)',
                         gridColumn: 'span 3'
                     }}></div>
                     <div class="input-title">
@@ -149,20 +96,20 @@ export default function WorkSelectionPage() {
                     </div>
                 </ResponsiveGridLayout>
                 <ResponsiveGridLayout
-                    columnsXL={12}
-                    columnSpanXL={2}
-                    columnSpanL={2}
-                    columnSpanM={6}
-                    columnSpanS={6}
+                    columnsXL={14}
+                    columnSpanXL={4}
+                    columnSpanL={4}
+                    columnSpanM={8}
+                    columnSpanS={8}
                     className="grid-row"
                     style={{
                         alignItems: 'center'
                     }}>
-                    <div></div>
+                    <div style={{
+                        gridColumn: 'span 2'
+                    }}></div>
                     <div class="input-label">
                         <Label>指図：</Label>
-                    </div>
-                    <div>
                         <Input icon={
                             <Icon
                                 name="value-help"
@@ -177,8 +124,6 @@ export default function WorkSelectionPage() {
                     </div>
                     <div class="input-label">
                         <Label>作業：</Label>
-                    </div>
-                    <div>
                         <Input icon={
                             <Icon
                                 name="value-help"
@@ -193,7 +138,6 @@ export default function WorkSelectionPage() {
                 </ResponsiveGridLayout>
                 <ResponsiveGridLayout columnsXL={12} columnSpanXL={2} columnSpanL={2} columnSpanM={6} columnSpanS={12} className="grid-row">
                     <div style={{
-                        // background: 'var(--sapAccentColor1)',
                         gridColumn: 'span 3'
                     }}></div>
                     <div class="input-title">
@@ -201,21 +145,17 @@ export default function WorkSelectionPage() {
                     </div>
                 </ResponsiveGridLayout>
                 <ResponsiveGridLayout
-                    columnsXL={12}
-                    columnSpanXL={2}
-                    columnSpanL={2}
-                    columnSpanM={6}
-                    columnSpanS={6}
-                    className="grid-row"
-                    rowGap="1rem"
-                    style={{
-                        alignItems: 'center'
-                    }}>
-                    <div></div>
+                    columnsXL={14}
+                    columnSpanXL={4}
+                    columnSpanL={4}
+                    columnSpanM={8}
+                    columnSpanS={8}
+                    className="grid-row">
+                    <div style={{
+                        gridColumn: 'span 2'
+                    }}></div>
                     <div class="input-label">
                         <Label>品目：</Label>
-                    </div>
-                    <div>
                         <Input icon={
                             <Icon
                                 name="value-help"
@@ -229,8 +169,6 @@ export default function WorkSelectionPage() {
                     </div>
                     <div class="input-label">
                         <Label>シリアル番号：</Label>
-                    </div>
-                    <div>
                         <Input icon={
                             <Icon
                                 name="value-help"
@@ -243,97 +181,14 @@ export default function WorkSelectionPage() {
                         </Input>
                     </div>
                 </ResponsiveGridLayout>
-                <ResponsiveGridLayout columnsXL={12} columnSpanL={1} className="grid-row">
+                <ResponsiveGridLayout columnsXL={12} columnSpanL={1} columnSpanM={8} className="grid-row">
                     <div style={{
-                        // background: 'var(--sapAccentColor1)',
                         gridColumn: 'span 9'
                     }}></div>
                     <div class='input-label'>
                         <Button design="Emphasized" onClick={() => setShowOASelectDialog(true)}>作業開始</Button>
                     </div>
-                </ResponsiveGridLayout> */}
-
-
-
-                {/* Toolbarを用いた実装 */}
-                <Toolbar numberOfAlwaysVisibleItems={1} toolbarStyle="Clear">
-                    {/* <FlexBox justifyContent="Center"> */}
-                        <RadioButton
-                            name="mode"
-                            value='orderOp'
-                            checked={searchMode === 'orderOp'}
-                            onChange={handleRadioChange}
-                            text="指図/作業検索"
-                        />
-                        <RadioButton
-                            name="mode"
-                            value='itemSerial'
-                            checked={searchMode === 'itemSerial'}
-                            onChange={handleRadioChange}
-                            text="品目/シリアル番号検索"
-                        />
-                    {/* </FlexBox> */}
-                </Toolbar>
-                <Toolbar numberOfAlwaysVisibleItems={1} toolbarStyle="Clear">
-                    <Label>指図/作業検索</Label>
-                </Toolbar>
-                <Toolbar numberOfAlwaysVisibleItems={1} toolbarStyle="Clear" className="center" alignItems="Center">
-                    <Label>指図：</Label>
-                    <Input icon={
-                        <Icon
-                            name="value-help"
-                            onClick={() => setShowOrderSearchDialog(true)}>
-                        </Icon>}
-                        maxlength={12}
-                        type="Number"
-                        disabled={searchMode !== 'orderOp'}
-                    >
-                    </Input>
-                    <Label>作業：</Label>
-                    <Input icon={
-                        <Icon
-                            name="value-help"
-                            onClick={() => setShowOpSearchDialog(true)}>
-                        </Icon>}
-                        maxlength={4}
-                        type="Number"
-                        disabled={searchMode !== 'orderOp'}
-                    >
-                    </Input>
-                </Toolbar>
-                <Toolbar numberOfAlwaysVisibleItems={1} toolbarStyle="Clear">
-                    <Label>品目・シリアル番号検索</Label>
-                </Toolbar>
-                <Toolbar numberOfAlwaysVisibleItems={1} toolbarStyle="Clear">
-                    <Label>品目：</Label>
-                    <Input icon={
-                        <Icon
-                            name="value-help"
-                            onClick={() => setShowItemSearchDialog(true)}>
-                        </Icon>}
-                        maxlength={40}
-                        disabled={searchMode !== 'itemSerial'}
-                    >
-                    </Input>
-                    <Label>シリアル番号：</Label>
-                    <Input icon={
-                        <Icon
-                            name="value-help"
-                            onClick={() => setShowSerialSearchDialog(true)}>
-                        </Icon>}
-                        maxlength={18}
-                        disabled={searchMode !== 'itemSerial'}
-                    >
-                    </Input>
-                </Toolbar>
-                <Toolbar numberOfAlwaysVisibleItems={1} toolbarStyle="Clear">
-                    <Button
-                        design="Emphasized"
-                        onClick={() => setShowOASelectDialog(true)}
-                    >
-                        作業開始
-                    </Button>
-                </Toolbar>
+                </ResponsiveGridLayout>
             </Page>
             <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} />
             <OrderSearchDialog isOpen={showOrderSearchDialog} closeDialog={closeOrderSearchDialog} />
