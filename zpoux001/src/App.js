@@ -4,7 +4,6 @@ import "./App.css";
 import NotFound from "pages/NotFound";
 import TestPage from "pages/TestPage";
 import WorkListPage from "pages/WorkListPage";
-import MaterialSerialSelectPage from "pages/MaterialSerialSelectPage";
 // import Router from "pages/Router";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from '@ui5/webcomponents-react';
@@ -21,12 +20,6 @@ const lang = window.navigator.language; // 言語
 // 作業一覧のproperties
 registerI18nLoader('i18n_WorkListPage', lang, async () => {
   const props = await (await fetch("./i18n/i18n_WorkListPage_" + lang + ".properties")).text();
-  return parse(props); // this call is required for parsing the properties text
-});
-
-// i18n_TestForModalPageのproperties
-registerI18nLoader('i18n_TestForModalPage', lang, async () => {
-  const props = await (await fetch("./i18n/i18n_TestForModalPage_" + lang + ".properties")).text();
   return parse(props); // this call is required for parsing the properties text
 });
 
