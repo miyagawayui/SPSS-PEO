@@ -1,10 +1,13 @@
 import { Button, Dialog, Label, Toolbar, ToolbarSpacer, Table, TableColumn, Input, TableRow, TableCell } from '@ui5/webcomponents-react';
 
-export const OrderSearchDialog = ({ isOpen, closeDialog, mode }) => {
-    const rowClick = () => {
-        console.log('aaa');
+export const OrderSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) => {
+    
+    const rowClick = (e) => {
+        const firstCellContent = e.currentTarget.querySelector('ui5-table-cell').textContent;
+        onClickRow(firstCellContent);
         closeDialog();
     }
+    
     return (
         <>
             <Dialog
@@ -77,14 +80,16 @@ export const OrderSearchDialog = ({ isOpen, closeDialog, mode }) => {
                 >
                     <TableRow onClick={rowClick}>
                         <TableCell>
-                            <Label>
+                            {mode === 'order' ? <Label>0100</Label> : <Label>0010</Label>}
+                            {/* <Label>
                                 0100
-                            </Label>
+                            </Label> */}
                         </TableCell>
                         <TableCell>
-                            <Label>
+                            {mode === 'order' ? <Label>0010</Label> : <Label>0100</Label>}
+                            {/* <Label>
                                 0010
-                            </Label>
+                            </Label> */}
                         </TableCell>
                         <TableCell>
                             <Label>
@@ -94,6 +99,30 @@ export const OrderSearchDialog = ({ isOpen, closeDialog, mode }) => {
                         <TableCell>
                             <Label>
                                 デモ作業区
+                            </Label>
+                        </TableCell>
+                    </TableRow>
+                    <TableRow onClick={rowClick}>
+                        <TableCell>
+                            {mode === 'order' ? <Label>0200</Label> : <Label>0020</Label>}
+                            {/* <Label>
+                                0200
+                            </Label> */}
+                        </TableCell>
+                        <TableCell>
+                            {mode === 'order' ? <Label>0020</Label> : <Label>0200</Label>}
+                            {/* <Label>
+                                0020
+                            </Label> */}
+                        </TableCell>
+                        <TableCell>
+                            <Label>
+                                Z002
+                            </Label>
+                        </TableCell>
+                        <TableCell>
+                            <Label>
+                                デモ作業区2
                             </Label>
                         </TableCell>
                     </TableRow>

@@ -37,6 +37,7 @@ export default function WorkSelectionPage() {
 
     // 指図検索ヘルプの変数定義
     const [showOrderSearchDialog, setShowOrderSearchDialog] = useState(false);
+    const [orderValue, setOrderValue] = useState('');
     const closeOrderSearchDialog = () => {
         setShowOrderSearchDialog(false);
     }
@@ -133,7 +134,7 @@ export default function WorkSelectionPage() {
                             maxlength={12}
                             type="Number"
                             disabled={searchMode !== 'orderOp'}
-
+                            value={orderValue}
                         >
                         </Input>
                     </div>
@@ -206,8 +207,8 @@ export default function WorkSelectionPage() {
                 </ResponsiveGridLayout>
             </Page>
             <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} />
-            <OrderSearchDialog isOpen={showOrderSearchDialog} closeDialog={closeOrderSearchDialog} mode={dialogName} />
-            <OpSearchDialog isOpen={showOpSearchDialog} closeDialog={closeOpSearchDialog} />
+            <OrderSearchDialog isOpen={showOrderSearchDialog} closeDialog={closeOrderSearchDialog} mode={dialogName} onClickRow={setOrderValue} />
+            {/* <OpSearchDialog isOpen={showOpSearchDialog} closeDialog={closeOpSearchDialog} /> */}
             <ItemSearchDialog isOpen={showItemSearchDialog} closeDialog={closeItemSearchDialog} />
             <SerialSearchDialog isOpen={showSerialSearchDialog} closeDialog={closeSerialSearchDialog} />
         </>
