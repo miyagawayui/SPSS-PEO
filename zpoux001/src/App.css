@@ -49,14 +49,12 @@
   margin-top: 5px;
 }
 
-<<<<<<< HEAD
 .App-TableHeader::part(column) {
   background-color: #F2F2F2;
   border-top: 1px solid #E5E5E5;
   border-bottom: 1px solid #E5E5E5;
-  border-left: 1px solid #E5E5E5;
-=======
+}
+
 .center {
   text-align: center;
->>>>>>> 4915ea13ed697baa2229b244a5dc5f903e49e717
 }
