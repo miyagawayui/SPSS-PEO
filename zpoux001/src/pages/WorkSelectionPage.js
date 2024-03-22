@@ -5,8 +5,7 @@ import "@ui5/webcomponents/dist/TabSeparator";
 import { Page, ResponsiveGridLayout, Toolbar, ToolbarSpacer } from '@ui5/webcomponents-react';
 import { Button, RadioButton, Input, Label, FlexBox, Icon } from '@ui5/webcomponents-react';
 import { OASelectDialog } from "components/OASelectDialog"
-import { OrderSearchDialog } from 'components/OrderSearchDialog'
-import { OpSearchDialog } from 'components/OpSearchDialog'
+import { OrderOpSearchDialog } from 'components/OrderOpSearchDialog'
 import { ItemSearchDialog } from 'components/ItemSearchDialog'
 import { SerialSearchDialog } from 'components/SerialSearchDialog'
 import "../App.css";
@@ -35,17 +34,25 @@ export default function WorkSelectionPage() {
         setShowOASelectDialog(false);
     }
 
-    // 指図検索ヘルプの変数定義
-    const [showOrderSearchDialog, setShowOrderSearchDialog] = useState(false);
+    // 指図/作業検索ヘルプの変数定義
+    const [showOrderOpSearchDialog, setShowOrderOpSearchDialog] = useState(false);
     const [orderValue, setOrderValue] = useState('');
-    const closeOrderSearchDialog = () => {
-        setShowOrderSearchDialog(false);
+    const [opValue, setOpValue] = useState('');
+    const closeOrderOpSearchDialog = () => {
+        setShowOrderOpSearchDialog(false);
+    }
+    const [orderOpHandler, setorderOpHandler] = useState('order')
+
+    // 指図検索ヘルプの表示
+    const openOrderSearchDialog = () => {
+        setorderOpHandler('order');
+        setShowOrderOpSearchDialog(true);
     }
 
-    // 作業検索ヘルプの変数定義
-    const [showOpSearchDialog, setShowOpSearchDialog] = useState(false);
-    const closeOpSearchDialog = () => {
-        // setShowOpSearchDialog(false);
+    // 作業検索ヘルプの表示
+    const openOpSearchDialog = () => {
+        setorderOpHandler('op');
+        setShowOrderOpSearchDialog(true);
     }
 
     // 品目検索ヘルプの変数定義
@@ -65,25 +72,10 @@ export default function WorkSelectionPage() {
     const handleRadioChange = (e) => {
         setSearchMode(e.target.value);
     }
-    
-    // ダイアログ制御
-    const [dialogName, setDialogName] = useState('order')
 
     // 変数定義
     const i18nBundle = useI18nBundle('i18n_WorkListPage');
     const i18n = useI18nBundle('i18n');
-
-    // 指図検索ヘルプの表示
-    const openOrderSearchDialog = () => {
-        setDialogName('order');
-        setShowOrderSearchDialog(true);
-    }
-
-    // 作業検索ヘルプの表示
-    const openOpSearchDialog = () => {
-        setDialogName('op');
-        setShowOrderSearchDialog(true);
-    }
 
     return (
         <>
@@ -148,6 +140,7 @@ export default function WorkSelectionPage() {
                             maxlength={4}
                             type="Number"
                             disabled={searchMode !== 'orderOp'}
+                            value={opValue}
                         >
                         </Input>
                     </div>
@@ -207,8 +200,7 @@ export default function WorkSelectionPage() {
                 </ResponsiveGridLayout>
             </Page>
             <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} />
-            <OrderSearchDialog isOpen={showOrderSearchDialog} closeDialog={closeOrderSearchDialog} mode={dialogName} onClickRow={setOrderValue} />
-            {/* <OpSearchDialog isOpen={showOpSearchDialog} closeDialog={closeOpSearchDialog} /> */}
+            <OrderOpSearchDialog isOpen={showOrderOpSearchDialog} closeDialog={closeOrderOpSearchDialog} mode={orderOpHandler} onClickRow={orderOpHandler === 'order' ? setOrderValue : setOpValue} />
             <ItemSearchDialog isOpen={showItemSearchDialog} closeDialog={closeItemSearchDialog} />
             <SerialSearchDialog isOpen={showSerialSearchDialog} closeDialog={closeSerialSearchDialog} />
         </>

@@ -1,6 +1,6 @@
 import { Button, Dialog, Label, Toolbar, ToolbarSpacer, Table, TableColumn, Input, TableRow, TableCell } from '@ui5/webcomponents-react';
 
-export const OrderSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) => {
+export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) => {
     
     const rowClick = (e) => {
         const firstCellContent = e.currentTarget.querySelector('ui5-table-cell').textContent;
@@ -11,7 +11,7 @@ export const OrderSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) => 
     return (
         <>
             <Dialog
-                id="OASelectDialog"
+                id="OrderOpSearchDialog"
                 open={isOpen}
                 style={{ width: "500px" }}
                 header={
@@ -30,13 +30,13 @@ export const OrderSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) => 
                     </Toolbar>
                 }
             >
-                <Toolbar toolbarStyle="Clear" className='dialog-search-bar'>
+                <Toolbar toolbarStyle="Clear" className='dialog-search-bar' numberOfAlwaysVisibleItems={2}>
                     <Input placeholder='検索' className='dialog-search-box'></Input>
                     <ToolbarSpacer></ToolbarSpacer>
                     <Button design="Emphasized" onClick={function _a() { }}>検索</Button>
                 </Toolbar>
                 <Table
-                    id="OrderSearchDialogTable"
+                    id="OrderOpSearchDialogTable"
                     style={{ height: "300px", overflow: "auto" }}
                     mode="SingleSelect"
                     noDataText="データがありません"
@@ -53,14 +53,12 @@ export const OrderSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) => 
                                 className="App-TableHeader"
                                 style={{ width: '300px' }}
                             >
-                                {/* <Label>指図</Label> */}
                                 {mode === 'order' ? <Label>指図</Label> : <Label>作業</Label>}
                             </TableColumn>
                             <TableColumn
                                 className="App-TableHeader"
                                 style={{ width: '300px' }}
                             >
-                                {/* <Label>作業</Label> */}
                                 {mode === 'order' ? <Label>作業</Label> : <Label>指図</Label>}
                             </TableColumn>
                             <TableColumn
