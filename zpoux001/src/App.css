@@ -53,7 +53,10 @@
   background-color: #F2F2F2;
   border-top: 1px solid #E5E5E5;
   border-bottom: 1px solid #E5E5E5;
-  border-right: 1px solid #E5E5E5;
+}
+
+.center {
+  text-align: center;
   border-left: 1px solid #E5E5E5;
 }
 

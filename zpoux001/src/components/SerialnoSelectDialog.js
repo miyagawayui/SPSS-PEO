@@ -6,58 +6,74 @@ import { TableRow, TableCell, TableColumn, Label } from '@ui5/webcomponents-reac
 export const SerialnoSelectDialog = ({ isOpen, closeDialog }) => {
     return (
         <>
-            <Dialog open={isOpen}
-            style={{ width: "500px" }}
-            >シリアル番号選択
-
+            <Dialog 
+                id="SerialnoSelectDialog"
+                open={isOpen}
+                style={{ width: "500px"}}
+                header={
+                    <Toolbar toolbarStyle="Clear">
+                    <Label style={{ fontSize: "17px", fontWeight: "bold" }}>
+                    シリアル番号選択
+                    </Label>
+                  </Toolbar>
+                }
+                footer={
+                    <Toolbar toolbarStyle="Clear">
+                      <ToolbarSpacer />
+                      <Button 
+                        design="Transparent"
+                        onClick={closeDialog}
+                      >キャンセル
+                      </Button>
+                    </Toolbar>
+                  }
+            >
             <Table
+                id="OASelectDialogTable"
+                style={{ height: "300px", overflow: "auto" }}
+                mode="SingleSelect"
+                noDataText="データがありません"
+                onLoadMore={function _a(){}}
+                onPopinChange={function _a(){}}
+                onRowClick={function _a(){}}
+                onSelectionChange={function _a(){}}                
+                stickyColumnHeader
                 columns=
                 {
                     <>
-                    <TableColumn style={{width: '300px'}}>
+                    <TableColumn 
+                        className="App-TableHeader" 
+                        style={{width: '300px'}}
+                    >                       
                         <Label>シリアル番号</Label>
                     </TableColumn>
-                    <TableColumn style={{width: '300px'}}>
+                    <TableColumn 
+                        className="App-TableHeader" 
+                        style={{width: '300px'}}
+                    >
                         <Label>ステータス</Label>
                     </TableColumn>
                     </>
                 }
-                growing="Scroll"
-                mode="SingleSelect"
-                onLoadMore={function _a(){}}
-                onPopinChange={function _a(){}}
-                onRowClick={function _a(){}}
-                onSelectionChange={function _a(){}}
             >
-            <TableRow>
-                <TableCell>
-                <Label>
-                    ooooooo1
-                </Label>
-                </TableCell>
-                <TableCell>
-                <Label>
-                    処理中
-                </Label>
-                </TableCell>
-            </TableRow>
 
             <TableRow>
                 <TableCell>
                 <Label>
-                    00000002
+                    0100
                 </Label>
                 </TableCell>
                 <TableCell>
                 <Label>
-                    待機中
+                    0010
                 </Label>
                 </TableCell>
-            </TableRow>
-
+            </TableRow>           
             </Table>
-
-                <Button onClick={closeDialog}>キャンセル</Button>
+            <FlexBox
+                justifyContent="End"
+            >
+            </FlexBox>
             </Dialog>
         </>
     )

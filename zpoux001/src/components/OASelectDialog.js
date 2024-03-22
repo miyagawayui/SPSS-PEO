@@ -11,7 +11,7 @@ export const OASelectDialog = ({ isOpen, closeDialog }) => {
             <Dialog 
                 id="OASelectDialog"
                 open={isOpen}
-                style={{ width: "500px" }}
+                style={{ width: "500px"}}
                 header={
                     <Toolbar toolbarStyle="Clear">
                     <Label style={{ fontSize: "17px", fontWeight: "bold" }}>
@@ -46,7 +46,7 @@ export const OASelectDialog = ({ isOpen, closeDialog }) => {
                     <TableColumn 
                         className="App-TableHeader" 
                         style={{width: '300px'}}
-                    >
+                    >                       
                         <Label>作業</Label>
                     </TableColumn>
                     <TableColumn 
