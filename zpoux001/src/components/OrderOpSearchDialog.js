@@ -1,13 +1,53 @@
 import { Button, Dialog, Label, Toolbar, ToolbarSpacer, Table, TableColumn, Input, TableRow, TableCell } from '@ui5/webcomponents-react';
+import { useEffect, useState } from 'react';
+import mock from '../mock_data/orderOp.json'
 
 export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) => {
-    
+
     const rowClick = (e) => {
         const firstCellContent = e.currentTarget.querySelector('ui5-table-cell').textContent;
         onClickRow(firstCellContent);
+        setChildren([]);
         closeDialog();
     }
-    
+
+    const handleCancel = () => {
+        setChildren([]);
+        closeDialog();
+    }
+
+    // リスト表示要素
+    const [children, setChildren] = useState([]);
+
+    const search = () => {
+        // API呼び出しを想定
+        const mockData = mock;
+        setChildren([]);
+        mockData.forEach((data, i) => {
+            setChildren((prev) => [
+                ...prev,
+                <TableRow key={i} onClick={rowClick}>
+                    <TableCell>
+                        <Label>{mode === 'order' ? data.ManufacturingOrder : data.OperationUnit}</Label>
+                    </TableCell>
+                    <TableCell>
+                        <Label>{mode === 'order' ? data.OperationUnit : data.ManufacturingOrder}</Label>
+                    </TableCell>
+                    <TableCell>
+                        <Label>
+                            {data.Material}
+                        </Label>
+                    </TableCell>
+                    <TableCell>
+                        <Label>
+                            {data.MaterialName}
+                        </Label>
+                    </TableCell>
+                </TableRow>
+            ])
+        });
+    }
+
     return (
         <>
             <Dialog
@@ -24,7 +64,7 @@ export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) =
                         <ToolbarSpacer />
                         <Button
                             design="Transparent"
-                            onClick={closeDialog}
+                            onClick={handleCancel}
                         >キャンセル
                         </Button>
                     </Toolbar>
@@ -33,7 +73,7 @@ export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) =
                 <Toolbar toolbarStyle="Clear" className='dialog-search-bar' numberOfAlwaysVisibleItems={2}>
                     <Input placeholder='検索' className='dialog-search-box'></Input>
                     <ToolbarSpacer></ToolbarSpacer>
-                    <Button design="Emphasized" onClick={function _a() { }}>検索</Button>
+                    <Button design="Emphasized" onClick={search}>検索</Button>
                 </Toolbar>
                 <Table
                     id="OrderOpSearchDialogTable"
@@ -76,18 +116,13 @@ export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) =
                         </>
                     }
                 >
-                    <TableRow onClick={rowClick}>
+                    {children}
+                    {/* <TableRow onClick={rowClick}>
                         <TableCell>
                             {mode === 'order' ? <Label>0100</Label> : <Label>0010</Label>}
-                            {/* <Label>
-                                0100
-                            </Label> */}
                         </TableCell>
                         <TableCell>
                             {mode === 'order' ? <Label>0010</Label> : <Label>0100</Label>}
-                            {/* <Label>
-                                0010
-                            </Label> */}
                         </TableCell>
                         <TableCell>
                             <Label>
@@ -103,15 +138,9 @@ export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) =
                     <TableRow onClick={rowClick}>
                         <TableCell>
                             {mode === 'order' ? <Label>0200</Label> : <Label>0020</Label>}
-                            {/* <Label>
-                                0200
-                            </Label> */}
                         </TableCell>
                         <TableCell>
                             {mode === 'order' ? <Label>0020</Label> : <Label>0200</Label>}
-                            {/* <Label>
-                                0020
-                            </Label> */}
                         </TableCell>
                         <TableCell>
                             <Label>
@@ -123,7 +152,7 @@ export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) =
                                 デモ作業区2
                             </Label>
                         </TableCell>
-                    </TableRow>
+                    </TableRow> */}
                 </Table>
             </Dialog>
         </>

@@ -1,0 +1,44 @@
+[
+    {
+        "ManufacturingOrder": "1000",
+        "ManufacturingOrderCategory": "001",
+        "ManufacturingOrderOperation": "001",
+        "ManufacturingOrderSequence": "001",
+        "ManufacturingOrderText": "001",
+        "Material": "100",
+        "MaterialName": "sample1",
+        "MfgOrderOperationText": "001",
+        "OpActualExecutionStartDate": "001",
+        "OpActualExecutionStartTime": "001",
+        "OperationUnit": "0011",
+        "OpPlannedTotalQuantity": 100.1
+    },
+    {
+        "ManufacturingOrder": "2000",
+        "ManufacturingOrderCategory": "001",
+        "ManufacturingOrderOperation": "001",
+        "ManufacturingOrderSequence": "001",
+        "ManufacturingOrderText": "001",
+        "Material": "200",
+        "MaterialName": "sample2",
+        "MfgOrderOperationText": "sample2",
+        "OpActualExecutionStartDate": "001",
+        "OpActualExecutionStartTime": "001",
+        "OperationUnit": "0021",
+        "OpPlannedTotalQuantity": 200.1
+    },
+    {
+        "ManufacturingOrder": "3000",
+        "ManufacturingOrderCategory": "001",
+        "ManufacturingOrderOperation": "001",
+        "ManufacturingOrderSequence": "001",
+        "ManufacturingOrderText": "001",
+        "Material": "300",
+        "MaterialName": "sample3",
+        "MfgOrderOperationText": "sample2",
+        "OpActualExecutionStartDate": "001",
+        "OpActualExecutionStartTime": "001",
+        "OperationUnit": "0031",
+        "OpPlannedTotalQuantity": 300.1
+    }
+]
