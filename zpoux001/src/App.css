@@ -53,8 +53,12 @@
   background-color: #F2F2F2;
   border-top: 1px solid #E5E5E5;
   border-bottom: 1px solid #E5E5E5;
+<<<<<<< HEAD
 }
 
 .center {
   text-align: center;
+=======
+  border-left: 1px solid #E5E5E5;
+>>>>>>> b05b317ea1cc4c50ffbc8dd75ca3296ee3370d1f
 }
