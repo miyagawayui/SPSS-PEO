@@ -44,7 +44,7 @@ export default function WorkSelectionPage() {
     // 作業検索ヘルプの変数定義
     const [showOpSearchDialog, setShowOpSearchDialog] = useState(false);
     const closeOpSearchDialog = () => {
-        setShowOpSearchDialog(false);
+        // setShowOpSearchDialog(false);
     }
 
     // 品目検索ヘルプの変数定義
@@ -64,10 +64,25 @@ export default function WorkSelectionPage() {
     const handleRadioChange = (e) => {
         setSearchMode(e.target.value);
     }
+    
+    // ダイアログ制御
+    const [dialogName, setDialogName] = useState('order')
 
     // 変数定義
     const i18nBundle = useI18nBundle('i18n_WorkListPage');
     const i18n = useI18nBundle('i18n');
+
+    // 指図検索ヘルプの表示
+    const openOrderSearchDialog = () => {
+        setDialogName('order');
+        setShowOrderSearchDialog(true);
+    }
+
+    // 作業検索ヘルプの表示
+    const openOpSearchDialog = () => {
+        setDialogName('op');
+        setShowOrderSearchDialog(true);
+    }
 
     return (
         <>
@@ -113,7 +128,7 @@ export default function WorkSelectionPage() {
                         <Input icon={
                             <Icon
                                 name="value-help"
-                                onClick={() => setShowOrderSearchDialog(true)}>
+                                onClick={() => openOrderSearchDialog()}>
                             </Icon>}
                             maxlength={12}
                             type="Number"
@@ -127,7 +142,7 @@ export default function WorkSelectionPage() {
                         <Input icon={
                             <Icon
                                 name="value-help"
-                                onClick={() => setShowOpSearchDialog(true)}>
+                                onClick={() => openOpSearchDialog()}>
                             </Icon>}
                             maxlength={4}
                             type="Number"
@@ -191,7 +206,7 @@ export default function WorkSelectionPage() {
                 </ResponsiveGridLayout>
             </Page>
             <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} />
-            <OrderSearchDialog isOpen={showOrderSearchDialog} closeDialog={closeOrderSearchDialog} />
+            <OrderSearchDialog isOpen={showOrderSearchDialog} closeDialog={closeOrderSearchDialog} mode={dialogName} />
             <OpSearchDialog isOpen={showOpSearchDialog} closeDialog={closeOpSearchDialog} />
             <ItemSearchDialog isOpen={showItemSearchDialog} closeDialog={closeItemSearchDialog} />
             <SerialSearchDialog isOpen={showSerialSearchDialog} closeDialog={closeSerialSearchDialog} />
