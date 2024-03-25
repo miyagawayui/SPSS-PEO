@@ -92,11 +92,6 @@ export const ItemSerialSearchDialog = ({ isOpen, closeDialog, mode, setItemValue
                     style={{ height: "300px", overflow: "auto" }}
                     mode="SingleSelect"
                     noDataText="データがありません"
-                    // onLoadMore={function _a() { }}
-                    // onPopinChange={function _a() { }}
-                    // onRowClick={function _a() { }}
-                    // onRowClick={rowClick}
-                    // onSelectionChange={function _a() { }}
                     stickyColumnHeader
                     columns=
                     {

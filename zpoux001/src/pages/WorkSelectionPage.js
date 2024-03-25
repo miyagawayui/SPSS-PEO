@@ -27,6 +27,14 @@ const PAGE_SIZE = 15;
 
 export default function WorkSelectionPage() {
 
+    // 定数
+    const SEARCH_MODE_ORDER_OP = 'orderOp';
+    const SEARCH_MODE_ITEM_SERIAL = 'itemSerial';
+    const DIALOG_MODE_ORDER = 'order';
+    const DIALOG_MODE_OP = 'op';
+    const DIALOG_MODE_ITEM = 'item';
+    const DIALOG_MODE_SERIAL = 'serial';
+
     // 作業活動選択の変数定義
     const [showOASelectDialog, setShowOASelectDialog] = useState(false);
     const closeWorkSelectionDialog = () => {
@@ -40,17 +48,17 @@ export default function WorkSelectionPage() {
     const closeOrderOpSearchDialog = () => {
         setShowOrderOpSearchDialog(false);
     }
-    const [orderOpHandler, setOrderOpHandler] = useState('order')
+    const [orderOpHandler, setOrderOpHandler] = useState(DIALOG_MODE_ORDER)
 
     // 指図検索ヘルプの表示
     const openOrderSearchDialog = () => {
-        setOrderOpHandler('order');
+        setOrderOpHandler(DIALOG_MODE_ORDER);
         setShowOrderOpSearchDialog(true);
     }
 
     // 作業検索ヘルプの表示
     const openOpSearchDialog = () => {
-        setOrderOpHandler('op');
+        setOrderOpHandler(DIALOG_MODE_OP);
         setShowOrderOpSearchDialog(true);
     }
 
@@ -61,22 +69,22 @@ export default function WorkSelectionPage() {
     const closeItemSerialSearchDialog = () => {
         setShowItemSerialSearchDialog(false);
     }
-    const [itemSerialHandler, setItemSerialHandler] = useState('item');
+    const [itemSerialHandler, setItemSerialHandler] = useState(DIALOG_MODE_ITEM);
 
     // 品目検索ヘルプの表示
     const openItemSearchDialog = () => {
-        setItemSerialHandler('item');
+        setItemSerialHandler(DIALOG_MODE_ITEM);
         setShowItemSerialSearchDialog(true);
     }
 
     // シリアル番号検索ヘルプの表示
     const openSerialSearchDialog = () => {
-        setItemSerialHandler('serial');
+        setItemSerialHandler(DIALOG_MODE_SERIAL);
         setShowItemSerialSearchDialog(true);
     }
 
     // モード活性制御
-    const [searchMode, setSearchMode] = useState('orderOp');
+    const [searchMode, setSearchMode] = useState(SEARCH_MODE_ORDER_OP);
     const handleRadioChange = (e) => {
         setSearchMode(e.target.value);
     }
@@ -97,10 +105,10 @@ export default function WorkSelectionPage() {
                     <div></div>
                     <div></div>
                     <div>
-                        <RadioButton name="mode" value='orderOp' checked={searchMode === 'orderOp'} onChange={handleRadioChange} text="指図/作業検索" />
+                        <RadioButton name="mode" value={SEARCH_MODE_ORDER_OP} checked={searchMode === SEARCH_MODE_ORDER_OP} onChange={handleRadioChange} text="指図/作業検索" />
                     </div>
                     <div>
-                        <RadioButton name="mode" value='itemSerial' checked={searchMode === 'itemSerial'} onChange={handleRadioChange} text="品目/シリアル番号検索" />
+                        <RadioButton name="mode" value={SEARCH_MODE_ITEM_SERIAL} checked={searchMode === SEARCH_MODE_ITEM_SERIAL} onChange={handleRadioChange} text="品目/シリアル番号検索" />
                     </div>
                 </ResponsiveGridLayout>
                 <ResponsiveGridLayout columnsXL={12} columnSpanXL={2} columnSpanL={2} columnSpanM={6} columnSpanS={12} className="grid-row">
@@ -132,7 +140,7 @@ export default function WorkSelectionPage() {
                                 onClick={() => openOrderSearchDialog()}>
                             </Icon>}
                             type="Number"
-                            disabled={searchMode !== 'orderOp'}
+                            disabled={searchMode !== SEARCH_MODE_ORDER_OP}
                             value={orderValue}
                         >
                         </Input>
@@ -145,7 +153,7 @@ export default function WorkSelectionPage() {
                                 onClick={() => openOpSearchDialog()}>
                             </Icon>}
                             type="Number"
-                            disabled={searchMode !== 'orderOp'}
+                            disabled={searchMode !== SEARCH_MODE_ORDER_OP}
                             value={opValue}
                         >
                         </Input>
@@ -178,7 +186,7 @@ export default function WorkSelectionPage() {
                             </Icon>}
                             maxlength={40}
                             type="Text"
-                            disabled={searchMode !== 'itemSerial'}
+                            disabled={searchMode !== SEARCH_MODE_ITEM_SERIAL}
                             value={itemValue}
                         >
                         </Input>
@@ -192,7 +200,7 @@ export default function WorkSelectionPage() {
                             </Icon>}
                             maxlength={18}
                             type="Text"
-                            disabled={searchMode !== 'itemSerial'}
+                            disabled={searchMode !== SEARCH_MODE_ITEM_SERIAL}
                             value={serialValue}
                         >
                         </Input>
@@ -208,7 +216,6 @@ export default function WorkSelectionPage() {
                 </ResponsiveGridLayout>
             </Page>
             <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} />
-            {/* <OrderOpSearchDialog isOpen={showOrderOpSearchDialog} closeDialog={closeOrderOpSearchDialog} mode={orderOpHandler} onClickRow={orderOpHandler === 'order' ? setOrderValue : setOpValue} /> */}
             <OrderOpSearchDialog isOpen={showOrderOpSearchDialog} closeDialog={closeOrderOpSearchDialog} mode={orderOpHandler} setOrderValue={setOrderValue} setOpValue={setOpValue} />
             <ItemSerialSearchDialog isOpen={showItemSerialSearchDialog} closeDialog={closeItemSerialSearchDialog} mode={itemSerialHandler} setItemValue={setItemValue} setSerialValue={setSerialValue} />
         </>

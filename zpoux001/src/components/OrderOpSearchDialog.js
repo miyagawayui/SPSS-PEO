@@ -1,17 +1,21 @@
 import { Button, Dialog, Label, Toolbar, ToolbarSpacer, Table, TableColumn, Input, TableRow, TableCell } from '@ui5/webcomponents-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import mock from '../mock_data/orderOp.json'
 
 export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, setOrderValue, setOpValue }) => {
+
+    // 定数
+    const MODE_ORDER = 'order';
+    const MODE_OP = 'op';
 
     const rowClick = (e) => {
         const rowCells = e.currentTarget.querySelectorAll('ui5-table-cell');
         const firstCellContent = rowCells[0].textContent;
         const secondCellContent = rowCells[1].textContent;
-        if (mode === 'order') {
+        if (mode === MODE_ORDER) {
             setOrderValue(firstCellContent);
             setOpValue(secondCellContent);
-        } else if (mode === 'op') {
+        } else if (mode === MODE_OP) {
             setOpValue(firstCellContent);
             setOrderValue(secondCellContent);
         }
@@ -36,10 +40,10 @@ export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, setOrderValue, 
                 ...prev,
                 <TableRow key={i} onClick={rowClick}>
                     <TableCell>
-                        <Label>{mode === 'order' ? data.ManufacturingOrder : data.OperationUnit}</Label>
+                        <Label>{mode === MODE_ORDER ? data.ManufacturingOrder : data.OperationUnit}</Label>
                     </TableCell>
                     <TableCell>
-                        <Label>{mode === 'order' ? data.OperationUnit : data.ManufacturingOrder}</Label>
+                        <Label>{mode === MODE_ORDER ? data.OperationUnit : data.ManufacturingOrder}</Label>
                     </TableCell>
                     <TableCell>
                         <Label>
@@ -96,13 +100,17 @@ export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, setOrderValue, 
                                 className="App-TableHeader"
                                 style={{ width: '300px' }}
                             >
-                                {mode === 'order' ? <Label>指図</Label> : <Label>作業</Label>}
+                                <Label>
+                                    {mode === MODE_ORDER ? '指図' : '作業'}
+                                </Label>
                             </TableColumn>
                             <TableColumn
                                 className="App-TableHeader"
                                 style={{ width: '300px' }}
                             >
-                                {mode === 'order' ? <Label>作業</Label> : <Label>指図</Label>}
+                                <Label>
+                                    {mode === MODE_ORDER ? '作業' : '指図'}
+                                </Label>
                             </TableColumn>
                             <TableColumn
                                 className="App-TableHeader"
