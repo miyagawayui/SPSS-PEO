@@ -2,8 +2,16 @@ import React, { useEffect, useState } from "react";
 import "@ui5/webcomponents/dist/TabContainer";
 import "@ui5/webcomponents/dist/Tab";
 import "@ui5/webcomponents/dist/TabSeparator";
-import { Page, ResponsiveGridLayout, Toolbar, ToolbarSpacer } from '@ui5/webcomponents-react';
-import { Button, RadioButton, Input, Label, FlexBox, Icon } from '@ui5/webcomponents-react';
+import { 
+    Page, 
+    ResponsiveGridLayout, 
+    Button, 
+    RadioButton, 
+    Input, 
+    Label, 
+    Icon, 
+    MessageBox 
+} from '@ui5/webcomponents-react';
 import { OASelectDialog } from "components/OASelectDialog"
 import { OrderOpSearchDialog } from 'components/OrderOpSearchDialog'
 import { ItemSerialSearchDialog } from 'components/ItemSerialSearchDialog'
@@ -34,6 +42,14 @@ export default function WorkSelectionPage() {
     const DIALOG_MODE_OP = 'op';
     const DIALOG_MODE_ITEM = 'item';
     const DIALOG_MODE_SERIAL = 'serial';
+
+    // メッセージ
+    const NO_INPUT_ORDER = '指図を入力してください。';
+    const NO_INPUT_OP = '作業を入力してください。';
+    const NO_INPUT_ORDER_AND_OP = '指図および作業を入力してください。';
+    const NO_INPUT_ITEM = '品目を入力してください。';
+    const NO_INPUT_SERIAL = 'シリアル番号を入力してください。';
+    const NO_INPUT_ITEM_AND_SERIAL = '品目およびシリアル番号を入力してください。';
 
     // 作業活動選択の変数定義
     const [showOASelectDialog, setShowOASelectDialog] = useState(false);
@@ -89,6 +105,50 @@ export default function WorkSelectionPage() {
         setSearchMode(e.target.value);
     }
 
+    // エラー用メッセージボックス
+    const [errorMessage, setErrorMessage] = useState("");
+    const [messageIsOpen, setMessageIsOpen] = useState(false);
+    const openMessage = () => {
+        setMessageIsOpen(true);
+    };
+    const closeMessage = () => {
+        setMessageIsOpen(false);
+    };
+
+    // 入力バリデーションチェック
+    const onClickOpStart = () => {
+        if (searchMode === SEARCH_MODE_ORDER_OP) {
+            if (orderValue.length === 0 && opValue.length === 0) {
+                setErrorMessage(NO_INPUT_ORDER_AND_OP);
+                openMessage();
+                return;
+            } else if (orderValue.length === 0) {
+                setErrorMessage(NO_INPUT_ORDER);
+                openMessage();
+                return;
+            } else if (opValue.length === 0) {
+                setErrorMessage(NO_INPUT_OP);
+                openMessage();
+                return;
+            }
+        } else if (searchMode === SEARCH_MODE_ITEM_SERIAL) {
+            if (itemValue.length === 0 && serialValue.length === 0) {
+                setErrorMessage(NO_INPUT_ITEM_AND_SERIAL);
+                openMessage();
+                return;
+            } else if (itemValue.length === 0) {
+                setErrorMessage(NO_INPUT_ITEM);
+                openMessage();
+                return;
+            } else if (serialValue.length === 0) {
+                setErrorMessage(NO_INPUT_SERIAL);
+                openMessage();
+                return;
+            }
+        }
+        setShowOASelectDialog(true);
+    }
+
     // 変数定義
     const i18nBundle = useI18nBundle('i18n_WorkListPage');
     const i18n = useI18nBundle('i18n');
@@ -142,6 +202,7 @@ export default function WorkSelectionPage() {
                             type="Number"
                             disabled={searchMode !== SEARCH_MODE_ORDER_OP}
                             value={orderValue}
+                            onChange={(e) => {setOrderValue(e.target.value)}}
                         >
                         </Input>
                     </div>
@@ -155,6 +216,7 @@ export default function WorkSelectionPage() {
                             type="Number"
                             disabled={searchMode !== SEARCH_MODE_ORDER_OP}
                             value={opValue}
+                            onChange={(e) => {setOpValue(e.target.value)}}
                         >
                         </Input>
                     </div>
@@ -188,6 +250,7 @@ export default function WorkSelectionPage() {
                             type="Text"
                             disabled={searchMode !== SEARCH_MODE_ITEM_SERIAL}
                             value={itemValue}
+                            onChange={(e) => {setItemValue(e.target.value)}}
                         >
                         </Input>
                     </div>
@@ -202,6 +265,7 @@ export default function WorkSelectionPage() {
                             type="Text"
                             disabled={searchMode !== SEARCH_MODE_ITEM_SERIAL}
                             value={serialValue}
+                            onChange={(e) => {setSerialValue(e.target.value)}}
                         >
                         </Input>
                     </div>
@@ -211,13 +275,16 @@ export default function WorkSelectionPage() {
                         gridColumn: 'span 9'
                     }}></div>
                     <div class='input-label'>
-                        <Button design="Emphasized" onClick={() => setShowOASelectDialog(true)}>作業開始</Button>
+                        <Button design="Emphasized" onClick={onClickOpStart}>作業開始</Button>
                     </div>
                 </ResponsiveGridLayout>
             </Page>
             <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} />
             <OrderOpSearchDialog isOpen={showOrderOpSearchDialog} closeDialog={closeOrderOpSearchDialog} mode={orderOpHandler} setOrderValue={setOrderValue} setOpValue={setOpValue} />
             <ItemSerialSearchDialog isOpen={showItemSerialSearchDialog} closeDialog={closeItemSerialSearchDialog} mode={itemSerialHandler} setItemValue={setItemValue} setSerialValue={setSerialValue} />
+            <MessageBox type="Error" open={messageIsOpen} onClose={closeMessage}>
+                {errorMessage}
+            </MessageBox>
         </>
     );
 }
