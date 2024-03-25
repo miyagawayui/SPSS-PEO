@@ -6,8 +6,7 @@ import { Page, ResponsiveGridLayout, Toolbar, ToolbarSpacer } from '@ui5/webcomp
 import { Button, RadioButton, Input, Label, FlexBox, Icon } from '@ui5/webcomponents-react';
 import { OASelectDialog } from "components/OASelectDialog"
 import { OrderOpSearchDialog } from 'components/OrderOpSearchDialog'
-import { ItemSearchDialog } from 'components/ItemSearchDialog'
-import { SerialSearchDialog } from 'components/SerialSearchDialog'
+import { ItemSerialSearchDialog } from 'components/ItemSerialSearchDialog'
 import "../App.css";
 
 
@@ -41,30 +40,39 @@ export default function WorkSelectionPage() {
     const closeOrderOpSearchDialog = () => {
         setShowOrderOpSearchDialog(false);
     }
-    const [orderOpHandler, setorderOpHandler] = useState('order')
+    const [orderOpHandler, setOrderOpHandler] = useState('order')
 
     // 指図検索ヘルプの表示
     const openOrderSearchDialog = () => {
-        setorderOpHandler('order');
+        setOrderOpHandler('order');
         setShowOrderOpSearchDialog(true);
     }
 
     // 作業検索ヘルプの表示
     const openOpSearchDialog = () => {
-        setorderOpHandler('op');
+        setOrderOpHandler('op');
         setShowOrderOpSearchDialog(true);
     }
 
-    // 品目検索ヘルプの変数定義
-    const [showItemSearchDialog, setShowItemSearchDialog] = useState(false);
-    const closeItemSearchDialog = () => {
-        setShowItemSearchDialog(false);
+    // 品目/シリアル番号検索ヘルプの変数定義
+    const [showItemSerialSearchDialog, setShowItemSerialSearchDialog] = useState(false);
+    const [itemValue, setItemValue] = useState('');
+    const [serialValue, setSerialValue] = useState('');
+    const closeItemSerialSearchDialog = () => {
+        setShowItemSerialSearchDialog(false);
+    }
+    const [itemSerialHandler, setItemSerialHandler] = useState('item');
+
+    // 品目検索ヘルプの表示
+    const openItemSearchDialog = () => {
+        setItemSerialHandler('item');
+        setShowItemSerialSearchDialog(true);
     }
 
-    // シリアル番号検索ヘルプの変数定義
-    const [showSerialSearchDialog, setShowSerialSearchDialog] = useState(false);
-    const closeSerialSearchDialog = () => {
-        setShowSerialSearchDialog(false);
+    // シリアル番号検索ヘルプの表示
+    const openSerialSearchDialog = () => {
+        setItemSerialHandler('serial');
+        setShowItemSerialSearchDialog(true);
     }
 
     // モード活性制御
@@ -166,11 +174,12 @@ export default function WorkSelectionPage() {
                         <Input icon={
                             <Icon
                                 name="value-help"
-                                onClick={() => setShowItemSearchDialog(true)}>
+                                onClick={openItemSearchDialog}>
                             </Icon>}
                             maxlength={40}
-                            type="Number"
+                            type="Text"
                             disabled={searchMode !== 'itemSerial'}
+                            value={itemValue}
                         >
                         </Input>
                     </div>
@@ -179,11 +188,12 @@ export default function WorkSelectionPage() {
                         <Input icon={
                             <Icon
                                 name="value-help"
-                                onClick={() => setShowSerialSearchDialog(true)}>
+                                onClick={openSerialSearchDialog}>
                             </Icon>}
                             maxlength={18}
-                            type="Number"
+                            type="Text"
                             disabled={searchMode !== 'itemSerial'}
+                            value={serialValue}
                         >
                         </Input>
                     </div>
@@ -199,8 +209,7 @@ export default function WorkSelectionPage() {
             </Page>
             <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} />
             <OrderOpSearchDialog isOpen={showOrderOpSearchDialog} closeDialog={closeOrderOpSearchDialog} mode={orderOpHandler} onClickRow={orderOpHandler === 'order' ? setOrderValue : setOpValue} />
-            <ItemSearchDialog isOpen={showItemSearchDialog} closeDialog={closeItemSearchDialog} />
-            <SerialSearchDialog isOpen={showSerialSearchDialog} closeDialog={closeSerialSearchDialog} />
+            <ItemSerialSearchDialog isOpen={showItemSerialSearchDialog} closeDialog={closeItemSerialSearchDialog} mode={itemSerialHandler} setItemValue={setItemValue} setSerialValue={setSerialValue} />
         </>
     );
 }
