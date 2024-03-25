@@ -2,11 +2,19 @@ import { Button, Dialog, Label, Toolbar, ToolbarSpacer, Table, TableColumn, Inpu
 import { useEffect, useState } from 'react';
 import mock from '../mock_data/orderOp.json'
 
-export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) => {
+export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, setOrderValue, setOpValue }) => {
 
     const rowClick = (e) => {
-        const firstCellContent = e.currentTarget.querySelector('ui5-table-cell').textContent;
-        onClickRow(firstCellContent);
+        const rowCells = e.currentTarget.querySelectorAll('ui5-table-cell');
+        const firstCellContent = rowCells[0].textContent;
+        const secondCellContent = rowCells[1].textContent;
+        if (mode === 'order') {
+            setOrderValue(firstCellContent);
+            setOpValue(secondCellContent);
+        } else if (mode === 'op') {
+            setOpValue(firstCellContent);
+            setOrderValue(secondCellContent);
+        }
         setChildren([]);
         closeDialog();
     }
@@ -80,11 +88,6 @@ export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) =
                     style={{ height: "300px", overflow: "auto" }}
                     mode="SingleSelect"
                     noDataText="データがありません"
-                    // onLoadMore={function _a() { }}
-                    // onPopinChange={function _a() { }}
-                    // onRowClick={function _a() { }}
-                    // onRowClick={rowClick}
-                    // onSelectionChange={function _a() { }}
                     stickyColumnHeader
                     columns=
                     {
@@ -117,42 +120,6 @@ export const OrderOpSearchDialog = ({ isOpen, closeDialog, mode, onClickRow }) =
                     }
                 >
                     {children}
-                    {/* <TableRow onClick={rowClick}>
-                        <TableCell>
-                            {mode === 'order' ? <Label>0100</Label> : <Label>0010</Label>}
-                        </TableCell>
-                        <TableCell>
-                            {mode === 'order' ? <Label>0010</Label> : <Label>0100</Label>}
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow onClick={rowClick}>
-                        <TableCell>
-                            {mode === 'order' ? <Label>0200</Label> : <Label>0020</Label>}
-                        </TableCell>
-                        <TableCell>
-                            {mode === 'order' ? <Label>0020</Label> : <Label>0200</Label>}
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z002
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区2
-                            </Label>
-                        </TableCell>
-                    </TableRow> */}
                 </Table>
             </Dialog>
         </>

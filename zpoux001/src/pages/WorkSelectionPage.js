@@ -208,7 +208,8 @@ export default function WorkSelectionPage() {
                 </ResponsiveGridLayout>
             </Page>
             <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} />
-            <OrderOpSearchDialog isOpen={showOrderOpSearchDialog} closeDialog={closeOrderOpSearchDialog} mode={orderOpHandler} onClickRow={orderOpHandler === 'order' ? setOrderValue : setOpValue} />
+            {/* <OrderOpSearchDialog isOpen={showOrderOpSearchDialog} closeDialog={closeOrderOpSearchDialog} mode={orderOpHandler} onClickRow={orderOpHandler === 'order' ? setOrderValue : setOpValue} /> */}
+            <OrderOpSearchDialog isOpen={showOrderOpSearchDialog} closeDialog={closeOrderOpSearchDialog} mode={orderOpHandler} setOrderValue={setOrderValue} setOpValue={setOpValue} />
             <ItemSerialSearchDialog isOpen={showItemSerialSearchDialog} closeDialog={closeItemSerialSearchDialog} mode={itemSerialHandler} setItemValue={setItemValue} setSerialValue={setSerialValue} />
         </>
     );
