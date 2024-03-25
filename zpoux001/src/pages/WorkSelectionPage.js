@@ -123,7 +123,6 @@ export default function WorkSelectionPage() {
                                 name="value-help"
                                 onClick={() => openOrderSearchDialog()}>
                             </Icon>}
-                            maxlength={12}
                             type="Number"
                             disabled={searchMode !== 'orderOp'}
                             value={orderValue}
@@ -137,7 +136,6 @@ export default function WorkSelectionPage() {
                                 name="value-help"
                                 onClick={() => openOpSearchDialog()}>
                             </Icon>}
-                            maxlength={4}
                             type="Number"
                             disabled={searchMode !== 'orderOp'}
                             value={opValue}
