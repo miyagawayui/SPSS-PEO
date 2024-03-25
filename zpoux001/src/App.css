@@ -1,0 +1,142 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.Zpoux001_01-MainFrameContents {
+  width: calc(100% - var(--sideFrameWidth));
+  height: calc(100vh - 70px - 40px - 100px);
+  left: var(--sideFrameWidth);
+  overflow: auto;
+}
+
+.Zpoux001_01-RateText{
+  font-weight:bold;
+  font-size:2em;
+}
+
+.tablecolor div[role="columnheader"] {
+  background-color: #f2f2f2;
+}
+
+.Zpoux001_01-GridLayoutItem{
+  grid-column: 1/6;
+}
+
+.Zpoux001_01-ToolButtonLabel {
+  font-size: 15px;
+  font-weight: bolder;
+  color: #0854A1;
+}
+
+.Zpoux001_01-ToolButtonLabel2 {
+  font-size: 15px;
+  font-weight: bolder;
+  color: #0854A1;
+}
+
+.Zpoux001_01-ToolButtonLabel2::part(icon) {
+  color: red !important;
+}
+
+.Zpoux001_01-BigButton1 {
+  font-weight: bold;
+  font-size: 22px;
+  color: #0854A1;
+  border: 2px solid #0854A1;
+}
+
+.Zpoux001_01-BigButton2 {
+  background-color: #0A6ED1;
+  font-weight: bold;
+  font-size: 22px;
+  color: #FFFFFF;
+  border: none;
+}
+
+.Zpoux001_01-HederArea {
+  /* position: absolute; */
+  width: 100%;
+  height: 100px;
+}
+
+.Zpoux001_01-TabButton {
+  width: 60px;
+  height: 50px;
+}
+
+.Zpoux001_01-TabButton::part(icon) {
+  width: 22px;
+  height: 22px;
+}
+
+.Zpoux001_01-icon {
+  width: 14px;
+  height: 14px;
+  color: #0854A1;
+  /* margin-right: 5%; */
+}
+
+.Zpoux001_01-ButtonArea1 {
+  /* position: absolute; */
+  width: 100%;
+  height: 40px;
+}
+
+.Zpoux001_01-ButtonArea2 {
+  /* position: absolute; */
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100px;
+  background-color: #89919A;
+}
+/* 
+.ui5-tab-strip-item .ui5-tab-strip-itemAdditionalText {
+  padding: 0px 0.188rem;
+  color: var(--_ui5-v1-22-0-rc-3_tc_headerItem_additional_text_color);
+  font-weight: var(--_ui5-v1-22-0-rc-3_tc_headerItem_additional_text_font_weight);
+  font-size: 3em !important;
+} */
+
+.SelectSerialHeder::part(header) {
+  padding: 0rem 1rem;
+}
+
+.SelectSerialHeder::part(footer) {
+  padding: 0rem 1rem;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

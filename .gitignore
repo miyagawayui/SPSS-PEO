@@ -1,0 +1,9 @@
+/mta_archives/
+/node_modules/
+/resources/
+
+# auto generated wildcard
+zpoux001/.env1
+zpoux001/node_modules
+zpoux001/build
+zpoux001/*.zip
