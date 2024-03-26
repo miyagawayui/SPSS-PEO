@@ -4,7 +4,6 @@ import { TableRow, TableCell, TableColumn, Label } from '@ui5/webcomponents-reac
 import { getOAData } from "api/OdataManager";
 
 //作業活動情報取得 Odata
-
 export const OASelectDialog = ({ isOpen, closeDialog }) => {
     return (
         <>
@@ -492,3 +491,27 @@ export const OASelectDialog = ({ isOpen, closeDialog }) => {
         </>
     )
 }
+
+//ロジック
+//作業活動を取得（OdataService返却値）
+//シリアルの場合のOdata
+//ロットの場合のOdata
+
+//画面表示
+
+
+
+
+
+//作業区比較
+//画面表示：担当作業区は活性、担当外作業区は非活性
+
+//品目のロット/シリアルチェック
+
+
+//作業活動選択時
+//指図/作業検索_ロット管理品の場合：作業記録へ遷移
+//指図/作業検索_シリアル管理品の場合：「シリアル番号選択」へ遷移
+//品目/シリアル番号検索_シリアル管理品の場合：作業記録へ遷移
+
+//キャンセルボタン押下でメイン画面に戻る
