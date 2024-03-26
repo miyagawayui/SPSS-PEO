@@ -34,7 +34,7 @@ export const getSerialNumberList = async (OpActyNtwkInstance, OpActyNtwkElement,
     return data.d?.results || data.d || data.value;
   })
   .catch( error => {
-    return error.response.data;
+    return error.response;
   })
 };
 
@@ -47,7 +47,7 @@ export const getContentsSerial = async (OpActyNtwkInstance, OpActyNtwkElement, S
     return data.d?.results || data.d || data.value;
   })
   .catch( error => {
-    return error.response.data;
+    return error.response;
   })
 };
 
@@ -60,7 +60,7 @@ export const getContentsLot = async (OpActyNtwkInstance, OpActyNtwkElement, lang
     return data.d?.results || data.d || data.value;
   })
   .catch( error => {
-    return error.response.data;
+    return error.response;
   })
 };
 

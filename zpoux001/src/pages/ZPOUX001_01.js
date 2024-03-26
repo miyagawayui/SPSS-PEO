@@ -23,6 +23,11 @@ import {
   FlexBoxDirection,
   FlexBoxJustifyContent,
   Bar,
+  Toolbar,
+  OverflowToolbarButton,
+  OverflowToolbarToggleButton,
+  ToolbarSpacer,
+  ToolbarSeparator,
   MessageBox,
   SelectDialog,
   StandardListItem,
@@ -276,10 +281,18 @@ export default function ZPOUX001_01() {
     // カラムの表示非表示
     const columns = cookies.columns? cookies.columns: ItemSelectionData.data;
     setHideColumns(columns);
+    // 列入れ替え
     const columnOrders = cookies.columnOrders? cookies.columnOrders: "";
     TblInstance.current.setColumnOrder(columnOrders.split(","));
 
-    console.log(TblInstance);
+    // ソート順
+    const orderbyKeys = cookies.orderbyKeys? cookies.orderbyKeys.split(" "): "";
+    let cookieOrderbyKeys = []; 
+    for (let j = 0;  j < orderbyKeys.length;  j++) {
+      cookieOrderbyKeys.push(JSON.parse(orderbyKeys[j]));
+    }
+    TblInstance.current.setSortBy(cookieOrderbyKeys);
+
     // 現在日付を分解
     let date = today;
     const year = date.getFullYear().toString();
@@ -374,13 +387,6 @@ export default function ZPOUX001_01() {
       }
     } catch(e) {
     } finally {
-      // // 進捗率計算 完了件数 / ( 完了件数 + 未完了件数 ) × 100
-      // if((decIncompCount+decCompCount) != 0){
-      //   const res = decCompCount/(decIncompCount + decCompCount) * 100
-      //   setRate(res.toString().padStart(2,"　"));
-      // } else {
-      //   setRate("0".padStart(2,"　"));
-      // }
       setLoading(false);
     }
   };
@@ -590,15 +596,6 @@ export default function ZPOUX001_01() {
     setUnfinishedMin(min.toString().padStart(2,"　"));
     const hour = parseInt(unfinishedTime > 0? unfinishedTime / 60: 0);
     setUnfinishedHour(hour.toString().padStart(2,"　"));
-
-    // decCompCount = itemsWithIds.length;
-
-    // 未完了一覧テーブルにバインド
-    // setWorkItems(listdata);
-
-    // 未完了件数
-    // setIncompCount(itemsWithIds.length);
-    // decIncompCount = itemsWithIds.length;
 
     // 未完了一覧テーブルにバインド
     setWorkItems(listdata);
@@ -836,12 +833,6 @@ export default function ZPOUX001_01() {
     setIncompCount(incompCount);
     // 完了件数表示
     setCompCount(compCount)
-    // // // 未完了データ件数
-    // // const IncompfilterStatus = '(SASStatusCategory eq 2 or SASStatusCategory eq 1 or SASStatusCategory eq 5)';
-    // // const IncompFilter = IncompfilterStatus + filterDate
-    // // const IncompItemCount = await getTableCount(IncompFilter, orderby, strSearch, strLang);
-    // // 未完了件数
-    // setIncompCount(IncompItemCount);
 
     // 進捗率計算 
     if((compCount + incompCount) != 0){
@@ -894,7 +885,7 @@ export default function ZPOUX001_01() {
     // Odata送信 作業開始
     try {
       // ショップフローアイテム取得
-      getShopFloorItem()
+      return await getShopFloorItem()
       .then(async shopFloorItem => {
         let _items = [];
         if(shopFloorItem == SERIAL_ITEMS_PTN){
@@ -909,6 +900,7 @@ export default function ZPOUX001_01() {
           _items = await postStartWorkSerial(opActyNtwkInstance, opActyNtwkElement, shopFloorItem, statusCategory);
         }
         if(_items.error){
+          // エラーの場合
           throw new Error(_items.error); 
         } else {
           const itemsWithIds = getDataList(_items);
@@ -931,6 +923,17 @@ export default function ZPOUX001_01() {
         const strLang = getLanguage();
         getSerialNumberList(OpActyNtwkInstance, OpActyNtwkElement, strLang)
         .then((_items) => {
+          // エラーの場合
+          if(_items.data || _items.status){
+            // ODataサービスエラーメッセージ
+            if(!_items.data.error || _items.status){
+              setErrMessage(_items.data);
+            }else{
+              setErrMessage(_items.data.error.message.value);
+            }
+            setErrBoxOpen(true);
+            throw new Error(_items);
+          };
           // データを格納
           const itemsWithIds = _items.map((item, index) => {
             item.id = index;
@@ -947,7 +950,7 @@ export default function ZPOUX001_01() {
           }
         }).catch((_items) => {
           // エラーの場合
-          return reject(_items.error)
+          return reject(_items)
         });
       } else {
         // ロット品は設定なし
@@ -1074,21 +1077,27 @@ export default function ZPOUX001_01() {
           const strLang = getLanguage();
           // シリアル番号のコンテンツを取得
           _items = await getContentsSerial(opActyNtwkInstance, opActyNtwkElement, shopFloorItem, strLang);
-          if(_items.error){
-            throw new Error(_items.error); 
-          }
+          // エラーの場合
+          if(_items.data || _items.status){
+            // ODataサービスエラーメッセージ
+            if(!_items.data.error || _items.status){
+              setErrMessage(_items.data);
+            }else{
+              setErrMessage(_items.data.error.message.value);
+            }
+            setErrBoxOpen(true);
+            throw new Error(_items.error);
+          };
           if(_items != null){
             const itemsWithIds = await getDataList(_items);
             // コンテンツ取得
             const div = itemsWithIds[0].MfgWorkInstructionContent;
             setDivContents(div);
-            setPopOver('ContentsPop', props.popoverid);
+            // 作業活動内容のポップアップ表示
+            setContentsPopOpen((prev) => !prev);
           };
           return;
         } catch (error) {
-          // ODataサービスエラーメッセージ
-          setErrMessage(error.message.value);
-          setErrBoxOpen(true);
           return;
         }
       }
@@ -1523,8 +1532,6 @@ export default function ZPOUX001_01() {
       setSelectedItems((prev) => {
         if (prev[itemText]) {
           return { ...prev, [itemText]: false };
-          // const { [itemText]: _omit, ...rest } = prev;
-          // return rest;
         } else {
           return { ...prev, [itemText]: true };
         }
@@ -1534,7 +1541,6 @@ export default function ZPOUX001_01() {
     const handleConfirm = () => {
       setHideColumns(selectedItems);
       setProducts(selectedItems);
-      //  await sleep(1000);
     };
     // キャンセル
     const handleCancel = () => {
@@ -1628,9 +1634,16 @@ export default function ZPOUX001_01() {
           // シリアル番号
           _items = await getContentsSerial(OpActyNtwkInstance, OpActyNtwkElement, shopFloorItem, strLang);
         }
-        if(_items.error){
+        // エラーの場合
+        if(_items.data || _items.status){
           // ODataサービスエラーメッセージ
-          throw new Error(_items.error); 
+          if(!_items.data.error || _items.status){
+            setErrMessage(_items.data);
+          }else{
+            setErrMessage(_items.data.error.message.value);
+          }
+          setErrBoxOpen(true);
+          throw new Error(_items.error);
         } else {
           const itemsWithIds = await getDataList(_items);
           // コンテンツ取得
@@ -1638,7 +1651,9 @@ export default function ZPOUX001_01() {
         };
       });
     } catch (error) {
-      return error;
+      // エラーの場合
+      throw new Error(error);
+      // return error;
     }
   }
 
@@ -1658,42 +1673,19 @@ export default function ZPOUX001_01() {
     // 作業活動内容を表示
     if (contentsPopRef.current) {
       try{
-        // contentsPopRef.current.opener = event.target.id;
-        // setOpenerId(event.target.id);
+        contentsPopRef.current.opener = event.target.id;
+        setOpenerId(event.target.id);
         // 作業活動内容の情報を取得
         const div = await getContentsData();
         if(div != null){
           setDivContents(div);
-          // setPopOver('ContentsPop', event.target.id);
           // 作業活動内容のポップアップ表示
           setContentsPopOpen((prev) => !prev);
         } 
       } catch (error) {
-        // ODataサービスエラーメッセージ
-        setErrMessage(error.message.value);
-        setErrBoxOpen(true);
         return;
       }
     }
-  };
-
-  const setPopOver =  (target,id) => {
-    let element = document.getElementById(target);
-    // element.setAttribute('open', 'true');
-    // element.setAttribute('opener', id);
-    if(target == 'ContentsPop'){
-      // 作業活動内容のポップアップ表示
-      setContentsPopOpen(true)
-    } else if(target == 'detailsPop') {
-      // 詳細画面ポップアップ表示
-      setPopoverIsOpen(true)
-    }
-  };
-
-
-  // Sleep関数
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
   };
 
   /**
@@ -1701,15 +1693,6 @@ export default function ZPOUX001_01() {
    */
   // 詳細リンク押下イベント
   const popoverRef = useRef(null);
-  const detailsClick = (event) => {
-    // 作業詳細を記載
-    event.markerAllowTableRowSelection = true;
-    if (popoverRef.current) {
-      // popoverRef.current.opener = event.target.id;
-      setItemsDetails(event.detail.row.original);
-      // setPopOver('detailsPop', event.target.id);
-    }
-  };
 
   // コンポーネント生成
   const [popoverIsOpen, setPopoverIsOpen] = useState(false);
@@ -1992,11 +1975,51 @@ export default function ZPOUX001_01() {
   const btnDeploymentAllClick =  () => {
     TblInstance.current.toggleAllRowsExpanded(true);
   };
-  // ★ソート時のイベント
+  // ソート時のイベント
   const onSortTable = (event) => {
-    console.log(event);
-    console.log(AnalyticalTableHooks);
+    // 選択中のカラム
+    let sortTargetId = event.detail.column.id;
+    let sortTargetDirection = event.detail.sortDirection;
+    // 現在のソート情報
+    let currentSortBy = TblInstance.current.state.sortBy;
+    let existTargetSortBy = currentSortBy.filter(item => item["id"] === sortTargetId);
+    let newsortby = [];
+    if(existTargetSortBy.length > 0){
+      // 存在する場合
+      for (let i = 0;  i < currentSortBy.length;  i++) {
+        let sortItem = {};
+        let item = currentSortBy[i];
+        if(item.id == sortTargetId){
+          if(sortTargetDirection == "clear"){
+            // ソートクリアの場合
+            continue;
+          }
+          // 既存ソート情報にソート対象のカラムが存在する場合
+          sortItem.id = sortTargetId;
+          sortItem.desc = sortTargetDirection == "desc"? true: false;
+        } else {
+          // 既存ソート情報を再設定
+          sortItem.id = item.id;
+          sortItem.desc = item.desc;
+        }
+        newsortby.push(sortItem);
+      }
+    } else {
+      // 存在しない場合
+      let addSortItem = {};
+      newsortby = currentSortBy;
+      addSortItem.id = sortTargetId;
+      addSortItem.desc = sortTargetDirection == "desc"? true: false;
+      newsortby.push(addSortItem);
+    }
+    // TblInstance.current.setSortBy(newsortby);
+    let cookieOrderbyKeys = []; 
+    for (let j = 0;  j < newsortby.length;  j++) {
+      cookieOrderbyKeys.push(JSON.stringify(newsortby[j]));
+    }
+    setCookie("orderbyKeys", cookieOrderbyKeys.join(" ").toString());
   };
+
   // 入れ替え時のイベント
   const onColumnsReorder = (event) => {
     console.log(TblInstance);
@@ -2014,61 +2037,57 @@ export default function ZPOUX001_01() {
   return (
     <CookiesProvider>
     <div>
-        <Bar
+        <Toolbar
           className="Zpoux001_01-HederArea"
-          // design="Auto"
+          design="Auto"
           toolbarStyle="Clear"
           // alignContent="End"
           style={{'height': '70px'}}
-          endContent={
-              <FlexBox
-              alignItems={FlexBoxAlignItems.Baseline}
-              justifyContent={FlexBoxJustifyContent.End}
-              >
-                <UnfinishedRemainingWorkTime />
-                <div
-                  style={{'width': '30px'}}
-                ></div>
-                <ProgressRate />
-              </FlexBox>
-          }
-          startContent={
-            <>
-              <Button  className="Zpoux001_01-TabButton" id={LIST_PTN_INCOMP} icon="account" onClick={changeListPtn} design={currentListPtn == LIST_PTN_INCOMP? "Emphasized" : "Default"}>
-              </Button >
-              <div>
-                <Text style={{'font-size': '1em', 'font-weight': 'bold'}}>{IncompCount}</Text>
-                <br/>
-                <Text style={{'font-size': '0.8em', 'font-weight': 'bolder'}}>{i18nBundle.getText('tabIncomplete')}</Text>
-              </div>
-              <Button className="Zpoux001_01-TabButton" id={LIST_PTN_COMP} icon="accept" onClick={changeListPtn} design={currentListPtn == LIST_PTN_COMP? "Emphasized" : "Default"}>
-              </Button>
-              <div>
-                <Text style={{'font-size': '1em', 'font-weight': 'bold'}}>{CompCount}</Text>
-                <br/>
-                <Text style={{'font-size': '0.8em', 'font-weight': 'bolder'}}>{i18nBundle.getText('tabCompletion')}</Text>
-              </div>
-              <FlexBox
-                alignItems={FlexBoxAlignItems.Center}
-                direction="Row"
-                justifyContent="Start"
-                wrap="NoWrap"
-              >
-                <SearchInput />
-              </FlexBox>
-            </>
-          }
         >
+        <Button  className="Zpoux001_01-TabButton" id={LIST_PTN_INCOMP} icon="account" onClick={changeListPtn} design={currentListPtn == LIST_PTN_INCOMP? "Emphasized" : "Default"}>
+        </Button >
+        <div>
+          <Text style={{'font-size': '1em', 'font-weight': 'bold'}}>{IncompCount}</Text>
+          <br/>
+          <Text style={{'font-size': '0.8em', 'font-weight': 'bolder'}}>{i18nBundle.getText('tabIncomplete')}</Text>
+        </div>
+        <Button className="Zpoux001_01-TabButton" id={LIST_PTN_COMP} icon="accept" onClick={changeListPtn} design={currentListPtn == LIST_PTN_COMP? "Emphasized" : "Default"}>
+        </Button>
+        <div>
+          <Text style={{'font-size': '1em', 'font-weight': 'bold'}}>{CompCount}</Text>
+          <br/>
+          <Text style={{'font-size': '0.8em', 'font-weight': 'bolder'}}>{i18nBundle.getText('tabCompletion')}</Text>
+        </div>
+        <FlexBox
+          alignItems={FlexBoxAlignItems.Center}
+          direction="Row"
+          justifyContent="Start"
+          wrap="NoWrap"
+        >
+          <SearchInput />
+        </FlexBox>
+        <ToolbarSpacer/>
           {/* 日付項目 */}
-            <FlexBox
-                alignItems={FlexBoxAlignItems.Center}
-                direction="Row"
-                justifyContent="Start"
-                wrap="NoWrap"
-            >
-              <ScheduledWorkDate />
-            </FlexBox>
-        </Bar>
+          <FlexBox
+              alignItems={FlexBoxAlignItems.Center}
+              direction="Row"
+              justifyContent="Start"
+              wrap="NoWrap"
+          >
+            <ScheduledWorkDate />
+          </FlexBox>
+          <ToolbarSpacer/>
+          <FlexBox
+            alignItems={FlexBoxAlignItems.Baseline}
+            justifyContent={FlexBoxJustifyContent.End}
+          >
+            <UnfinishedRemainingWorkTime />
+            <div
+              style={{'width': '30px'}}
+            ></div>
+            <ProgressRate />
+          </FlexBox>
+        </Toolbar>
         <div className="Zpoux001_01-MainFrameContents">
           <AnalyticalTable
             columns={COLUMNS}
@@ -2103,6 +2122,7 @@ export default function ZPOUX001_01() {
             tableInstance={TblInstance}
             reactTableOptions={{
               autoResetHiddenColumns: false,
+              autoResetSortBy: false,
             }}
           /> 
         </div>
