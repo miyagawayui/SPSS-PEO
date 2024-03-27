@@ -1,0 +1,12 @@
+[
+    {
+        "SerialNumber": "0001",
+        "SASStatusName": "処理中",
+        "OpActySFIGroupName": "???1"
+    },
+    {
+        "SerialNumber": "0002",
+        "SASStatusName": "待機中",
+        "OpActySFIGroupName": "???2"
+    }
+]

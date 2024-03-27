@@ -2,19 +2,20 @@ import React, { useEffect, useState } from "react";
 import "@ui5/webcomponents/dist/TabContainer";
 import "@ui5/webcomponents/dist/Tab";
 import "@ui5/webcomponents/dist/TabSeparator";
-import { 
-    Page, 
-    ResponsiveGridLayout, 
-    Button, 
-    RadioButton, 
-    Input, 
-    Label, 
-    Icon, 
-    MessageBox 
+import {
+    Page,
+    ResponsiveGridLayout,
+    Button,
+    RadioButton,
+    Input,
+    Label,
+    Icon,
+    MessageBox
 } from '@ui5/webcomponents-react';
 import { OASelectDialog } from "components/OASelectDialog"
 import { OrderOpSearchDialog } from 'components/OrderOpSearchDialog'
 import { ItemSerialSearchDialog } from 'components/ItemSerialSearchDialog'
+import { SerialnoSelectDialog } from 'components/SerialnoSelectDialog'
 import "../App.css";
 
 
@@ -56,6 +57,16 @@ export default function WorkSelectionPage() {
     const closeWorkSelectionDialog = () => {
         setShowOASelectDialog(false);
     }
+
+    // シリアルNo選択の変数定義
+    const [showSerialnoSelectDialog, setShowSerialnoSelectDialog] = useState(false);
+    const closeSerialnoSelectDialog = () => {
+        setShowSerialnoSelectDialog(false);
+    }
+    const openSerialnoSelectDialog = () => {
+        setShowSerialnoSelectDialog(true);
+    }
+    
 
     // 指図/作業検索ヘルプの変数定義
     const [showOrderOpSearchDialog, setShowOrderOpSearchDialog] = useState(false);
@@ -202,7 +213,7 @@ export default function WorkSelectionPage() {
                             type="Number"
                             disabled={searchMode !== SEARCH_MODE_ORDER_OP}
                             value={orderValue}
-                            onChange={(e) => {setOrderValue(e.target.value)}}
+                            onChange={(e) => { setOrderValue(e.target.value) }}
                         >
                         </Input>
                     </div>
@@ -216,7 +227,7 @@ export default function WorkSelectionPage() {
                             type="Number"
                             disabled={searchMode !== SEARCH_MODE_ORDER_OP}
                             value={opValue}
-                            onChange={(e) => {setOpValue(e.target.value)}}
+                            onChange={(e) => { setOpValue(e.target.value) }}
                         >
                         </Input>
                     </div>
@@ -250,7 +261,7 @@ export default function WorkSelectionPage() {
                             type="Text"
                             disabled={searchMode !== SEARCH_MODE_ITEM_SERIAL}
                             value={itemValue}
-                            onChange={(e) => {setItemValue(e.target.value)}}
+                            onChange={(e) => { setItemValue(e.target.value) }}
                         >
                         </Input>
                     </div>
@@ -265,7 +276,7 @@ export default function WorkSelectionPage() {
                             type="Text"
                             disabled={searchMode !== SEARCH_MODE_ITEM_SERIAL}
                             value={serialValue}
-                            onChange={(e) => {setSerialValue(e.target.value)}}
+                            onChange={(e) => { setSerialValue(e.target.value) }}
                         >
                         </Input>
                     </div>
@@ -278,10 +289,19 @@ export default function WorkSelectionPage() {
                         <Button design="Emphasized" onClick={onClickOpStart}>作業開始</Button>
                     </div>
                 </ResponsiveGridLayout>
+                <ResponsiveGridLayout columnsXL={12} columnSpanL={1} columnSpanM={8} className="grid-row">
+                    <div style={{
+                        gridColumn: 'span 9'
+                    }}></div>
+                    <div class='input-label'>
+                        <Button design="Emphasized" onClick={openSerialnoSelectDialog}>シリアル選択開始仮</Button>
+                    </div>
+                </ResponsiveGridLayout>
             </Page>
             <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} />
             <OrderOpSearchDialog isOpen={showOrderOpSearchDialog} closeDialog={closeOrderOpSearchDialog} mode={orderOpHandler} setOrderValue={setOrderValue} setOpValue={setOpValue} />
             <ItemSerialSearchDialog isOpen={showItemSerialSearchDialog} closeDialog={closeItemSerialSearchDialog} mode={itemSerialHandler} setItemValue={setItemValue} setSerialValue={setSerialValue} />
+            <SerialnoSelectDialog isOpen={showSerialnoSelectDialog} closeDialog={closeSerialnoSelectDialog} ManufacturingOrder={orderValue} ManufacturingOrderOperation={opValue} />
             <MessageBox type="Error" open={messageIsOpen} onClose={closeMessage}>
                 {errorMessage}
             </MessageBox>
