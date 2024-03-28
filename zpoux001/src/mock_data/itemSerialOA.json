@@ -1,0 +1,22 @@
+[
+    {
+        "ShopFloorItem": "",
+        "OpActyNtwkInstance": "",
+        "OpActyNtwkElement": "",
+        "OpActyNtwkElementExternalID": "",
+        "OperationActivity": "",
+        "OperationActivityName": "",
+        "OpActyIsSeldForRtactvPostg": "",
+        "ManufacturingOrder": "",
+        "ManufacturingOrderOperation": "",
+        "MfgOrderOperationText": "",
+        "StatusAndActionSchemaStatus": "",
+        "SASStatusName": "",
+        "SASStatusCategory": "",
+        "ProdnProcgIsFlexible": "",
+        "PRODUCTIONPLANT": "",
+        "WORKCENTERINTERNALID": "",
+        "WORKCENTER": "",
+        "WORKCENTERTEXT": ""
+    }
+]

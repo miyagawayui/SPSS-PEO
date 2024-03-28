@@ -298,7 +298,7 @@ export default function WorkSelectionPage() {
                     </div>
                 </ResponsiveGridLayout>
             </Page>
-            <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} />
+            <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} mode={searchMode} />
             <OrderOpSearchDialog isOpen={showOrderOpSearchDialog} closeDialog={closeOrderOpSearchDialog} mode={orderOpHandler} setOrderValue={setOrderValue} setOpValue={setOpValue} />
             <ItemSerialSearchDialog isOpen={showItemSerialSearchDialog} closeDialog={closeItemSerialSearchDialog} mode={itemSerialHandler} setItemValue={setItemValue} setSerialValue={setSerialValue} />
             <SerialnoSelectDialog isOpen={showSerialnoSelectDialog} closeDialog={closeSerialnoSelectDialog} ManufacturingOrder={orderValue} ManufacturingOrderOperation={opValue} />
