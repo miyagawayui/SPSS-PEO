@@ -4,95 +4,103 @@ import { TableRow, TableCell, TableColumn, Label } from '@ui5/webcomponents-reac
 import { getOAData } from "api/OdataManager";
 import orderOpOA from '../mock_data/orderOpOA.json'
 import itemSerialOA from '../mock_data/itemSerialOA.json'
-import serialnoOA from '../mock_data/serialnoOA.json'
-import mock from '../mock_data/orderOp.json'
+import loginUserInfo from '../mock_data/loginUserInfo.json'
+import "../App.css";
 
 //作業活動情報取得 Odata
-export const OASelectDialog = ({ isOpen, closeDialog, mode }) => {
+export const OASelectDialog = ({
+    isOpen,
+    closeDialog,
+    mode,
+    manufacturingOrder,
+    manufacturingOrderOperation,
+    serialNumber,
+    material, 
+    openSerialnoSelectDialog}) => {
 
     // 定数
     const SEARCH_MODE_ORDER_OP = 'orderOp';
     const SEARCH_MODE_ITEM_SERIAL = 'itemSerial';
 
     // リスト表示要素
+    const [OAList, setOAList] = useState([])
     const [children, setChildren] = useState([]);
 
-    //ロジック
-    //作業活動を取得（OdataService返却値）
-    //シリアルの場合のOdata
-    //ロットの場合のOdata
-
-    //画面表示
-
-
-
-
-
-    //作業区比較
-    //画面表示：担当作業区は活性、担当外作業区は非活性
-
-    //品目のロット/シリアルチェック
-
-
-    //作業活動選択時
-    //指図/作業検索_ロット管理品の場合：作業記録へ遷移
-    //指図/作業検索_シリアル管理品の場合：「シリアル番号選択」へ遷移
-    //品目/シリアル番号検索_シリアル管理品の場合：作業記録へ遷移
-
-    //キャンセルボタン押下でメイン画面に戻る
-
     useEffect(() => {
+        setOAList([]);
         setChildren([]);
         if (isOpen) {
-            // ログインユーザ情報取得処理
-            const user = ''
 
             setChildren([]);
-            let OAList = [];
+
             if (mode === SEARCH_MODE_ORDER_OP) {
                 // Odataサービス名：PP_MPE_OPER_MANAGE
                 // Entity名：C_ProcgExecOperationActivity
-                OAList = orderOpOA
+                setOAList(orderOpOA);
             } else if (mode === SEARCH_MODE_ITEM_SERIAL) {
                 // Odataサービス名：MPE_SFI_EXECUTION_SRV
                 // Entity名：C_ShopFloorItemAtOpActy
-                OAList = itemSerialOA
+                setOAList(itemSerialOA);
             }
-            OAList.forEach((data, i) => {
-                setChildren((prev) => [
-                    ...prev,
-                    // <TableRow key={i} onClick={rowClick}>
-                    <TableRow key={i} >
-                        <TableCell>
-                            <Label>
-                                {data.ManufacturingOrderOperation}
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                {data.OpActyNtwkElementExternalID}
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                {data.WORKCENTER}
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                {data.WORKCENTERTEXT}
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                {data.SASStatusName}
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                ])
-            });
         }
     }, [isOpen]);
+
+    useEffect(() => {
+        OAList.forEach((data, i) => {
+            // ログインユーザ情報取得処理
+            const user = loginUserInfo;
+
+            const isUsersWorkCenter = (
+                user[0].WorkCenter === data.WorkCenter &&
+                user[0].Plant === data.ProductionPlant)
+
+            setChildren((prev) => [
+                ...prev,
+                <TableRow key={i} onClick={rowClick} className={isUsersWorkCenter ? "" : "disabled-table-row"} data-rowIndex={i}>
+                    <TableCell className={isUsersWorkCenter ? "" : "disabled-table-column"}>
+                        <Label>
+                            {data.ManufacturingOrderOperation}
+                        </Label>
+                    </TableCell>
+                    <TableCell className={isUsersWorkCenter ? "" : "disabled-table-column"}>
+                        <Label>
+                            {data.OpActyNtwkElementExternalID}
+                        </Label>
+                    </TableCell>
+                    <TableCell className={isUsersWorkCenter ? "" : "disabled-table-column"}>
+                        <Label>
+                            {data.WorkCenter}
+                        </Label>
+                    </TableCell>
+                    <TableCell className={isUsersWorkCenter ? "" : "disabled-table-column"}>
+                        <Label>
+                            {data.WorkCenterText}
+                        </Label>
+                    </TableCell>
+                    <TableCell className={isUsersWorkCenter ? "" : "disabled-table-column"}>
+                        <Label>
+                            {data.SASStatusName}
+                        </Label>
+                    </TableCell>
+                </TableRow>
+            ])
+        });
+    }, [OAList])
+
+    const rowClick = (e) => {
+        console.log('クリックされました')
+
+        const index = e.currentTarget.getAttribute("data-rowIndex");
+        const rowData = OAList[index]
+        console.log(rowData)
+
+        if (mode === SEARCH_MODE_ORDER_OP && rowData.OpActyConfIsSFIBased) {
+            console.log('シリアル管理品');
+            openSerialnoSelectDialog();
+        } else {
+            console.log('ロット管理品')
+        }
+    }
 
     return (
         <>
@@ -166,411 +174,6 @@ export const OASelectDialog = ({ isOpen, closeDialog, mode }) => {
                 >
 
                     {children}
-                    {/* <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0010
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                処理中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <Label>
-                                0100
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                0020
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                Z001
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                デモ作業区
-                            </Label>
-                        </TableCell>
-                        <TableCell>
-                            <Label>
-                                待機中
-                            </Label>
-                        </TableCell>
-                    </TableRow> */}
 
                 </Table>
                 <FlexBox

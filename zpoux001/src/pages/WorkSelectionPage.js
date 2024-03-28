@@ -66,7 +66,7 @@ export default function WorkSelectionPage() {
     const openSerialnoSelectDialog = () => {
         setShowSerialnoSelectDialog(true);
     }
-    
+
 
     // 指図/作業検索ヘルプの変数定義
     const [showOrderOpSearchDialog, setShowOrderOpSearchDialog] = useState(false);
@@ -289,19 +289,20 @@ export default function WorkSelectionPage() {
                         <Button design="Emphasized" onClick={onClickOpStart}>作業開始</Button>
                     </div>
                 </ResponsiveGridLayout>
-                <ResponsiveGridLayout columnsXL={12} columnSpanL={1} columnSpanM={8} className="grid-row">
-                    <div style={{
-                        gridColumn: 'span 9'
-                    }}></div>
-                    <div class='input-label'>
-                        <Button design="Emphasized" onClick={openSerialnoSelectDialog}>シリアル選択開始仮</Button>
-                    </div>
-                </ResponsiveGridLayout>
             </Page>
-            <OASelectDialog isOpen={showOASelectDialog} closeDialog={closeWorkSelectionDialog} mode={searchMode} />
+            <OASelectDialog
+                isOpen={showOASelectDialog}
+                closeDialog={closeWorkSelectionDialog}
+                mode={searchMode}
+                manufacturingOrder={orderValue}
+                manufacturingOrderOperation={opValue}
+                serialNumber={serialValue}
+                material={itemValue}
+                openSerialnoSelectDialog={openSerialnoSelectDialog}
+            />
             <OrderOpSearchDialog isOpen={showOrderOpSearchDialog} closeDialog={closeOrderOpSearchDialog} mode={orderOpHandler} setOrderValue={setOrderValue} setOpValue={setOpValue} />
             <ItemSerialSearchDialog isOpen={showItemSerialSearchDialog} closeDialog={closeItemSerialSearchDialog} mode={itemSerialHandler} setItemValue={setItemValue} setSerialValue={setSerialValue} />
-            <SerialnoSelectDialog isOpen={showSerialnoSelectDialog} closeDialog={closeSerialnoSelectDialog} ManufacturingOrder={orderValue} ManufacturingOrderOperation={opValue} />
+            <SerialnoSelectDialog isOpen={showSerialnoSelectDialog} closeDialog={closeSerialnoSelectDialog} manufacturingOrder={orderValue} manufacturingOrderOperation={opValue} />
             <MessageBox type="Error" open={messageIsOpen} onClose={closeMessage}>
                 {errorMessage}
             </MessageBox>

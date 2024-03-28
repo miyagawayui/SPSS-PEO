@@ -12,7 +12,7 @@ import {
 } from '@ui5/webcomponents-react';
 import mock from '../mock_data/serialNo.json'
 
-export const SerialnoSelectDialog = ({ isOpen, closeDialog, ManufacturingOrder, ManufacturingOrderOperation }) => {
+export const SerialnoSelectDialog = ({ isOpen, closeDialog, manufacturingOrder, manufacturingOrderOperation }) => {
 
     useEffect(() => {
         if (isOpen) {

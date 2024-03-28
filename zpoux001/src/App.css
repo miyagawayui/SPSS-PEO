@@ -32,6 +32,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -66,4 +67,13 @@
 
 .dialog-search-bar {
   margin-bottom: 5px;
+}
+
+.disabled-table-row {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.disabled-table-column {
+  background-color: #c6c6c6
 }
