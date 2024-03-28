@@ -114,8 +114,6 @@ export default function ZPOUX001_01() {
   var OpActyNtwkElement = "";           // ネットワークエレメント
   var OpActyConfIsSFIBased = "";        // 品目確認
   var SASStatusCategory = "";           // ステータスカテゴリ
-  var decIncompCount = 0;              // 未完了
-  var decCompCount = 0;                // 完了
   const [openerId, setOpenerId] = useState("");       // コンテンツ
   const i18nBundle = useI18nBundle('i18n_zpoux001_01');
   const COLUMNS = [
@@ -124,14 +122,12 @@ export default function ZPOUX001_01() {
       Header: i18nBundle.getText('ManufacturingOrder'),
       accessor: 'ManufacturingOrder',
       enableMultiSort: true,
-      disableDragAndDrop: true,
     },
     {
       // 作業番号
       Header: i18nBundle.getText('ManufacturingOrderOperation'),
       accessor: 'ManufacturingOrderOperation',
       enableMultiSort: true,
-      disableDragAndDrop: true,
     },
     {
       // 作業時間
@@ -176,7 +172,7 @@ export default function ZPOUX001_01() {
       enableMultiSort: true,
       Cell:({ value, cell }) => 
       {
-        const id = cell.row.original.id;
+        const id = cell.row.index;
         return(
           <FlexBox>
             <Link id={'OpeActIncom'+id} onClick={(e) => {e.markerAllowTableRowSelection = true;}}>{value}</Link>
@@ -265,7 +261,7 @@ export default function ZPOUX001_01() {
       disableDragAndDrop:true,
       Cell:({ value, cell }) => 
       {
-        const id = cell.row.original.id;
+        const id = cell.row.index;
         return(
           <FlexBox>
             <Link id={'detailsIncom'+id} onClick={(e) => {e.markerAllowTableRowSelection = true;}}>{value}</Link>
@@ -497,85 +493,6 @@ export default function ZPOUX001_01() {
     // 完了件数
     const compCount = _compItems.length;
 
-    let data999 = [];
-    let data111 = [];
-    let rowindexSasizu = 0
-    let indexSagyo = 0
-    let index = 0
-    let listdata = [];
-    let headdata = [];
-    let headdataSagyo = [];
-    // ツリー作成中
-    for (  let i = 0;  i < itemsWithIds.length;  i++  ) {
-      const data = itemsWithIds[i];
-      // ツリー作成
-      if(i+1 < itemsWithIds.length){
-        // 指図番号
-        if(itemsWithIds[i].ManufacturingOrder == itemsWithIds[i+1].ManufacturingOrder){
-          // 作業番号
-          if(itemsWithIds[i].ManufacturingOrderOperation == itemsWithIds[i+1].ManufacturingOrderOperation){
-            // 指図が同じかつ作業番号が同じ　作業番号ツリー作成中
-            if(rowindexSasizu == 0){
-              headdata = delItem(data);
-            }
-            if(indexSagyo == 0) {
-              headdataSagyo = delItem(data);
-            }
-            const treedata = itemcostm(data);
-            data111[indexSagyo] = treedata;
-            headdataSagyo.subRows = data111;
-            data999[0] = headdataSagyo;
-            headdata.subRows = data999;
-            indexSagyo++;
-          } else {
-            // 指図が同じかつ作業番号が違う
-            if(headdataSagyo.ManufacturingOrderOperation != ""){
-              // 作業番号ツリー作成中
-              const treedata = itemcostm(data);
-              data111[indexSagyo] = treedata;
-              headdataSagyo.subRows = data111;
-              data999[0] = headdataSagyo;
-              headdata.subRows = data999;
-              indexSagyo = 0;              
-            } else {
-              // 作業番号ツリー無し
-              // ツリー内部データ生成
-              if(rowindexSasizu == 0){
-                headdata = delItem(data);
-              }
-              const treedata = itemcostm(data);
-              data999[rowindexSasizu] = treedata;
-              headdata.subRows = data999;
-              rowindexSasizu++;
-            }
-          }
-          continue;
-        }
-      } else {
-        if(itemsWithIds[i-1].ManufacturingOrder == itemsWithIds[i].ManufacturingOrder){
-          // 最終行に対応
-          // ツリー内部データ生成
-          if(rowindexSasizu == 0){
-            headdata = delItem(data);
-          }
-          const treedata = itemcostm(data);
-          data999[rowindexSasizu] = treedata;
-          headdata.subRows = data999;
-          rowindexSasizu++;
-        }
-      }
-      if(!headdata.subRows){
-        listdata[index] = data;
-      }else{
-        listdata[index] = headdata;
-        headdata = [];
-        data999 = [];
-        rowindexSasizu = 0;
-        indexSagyo = 0;
-      }
-      index++;
-    }
-
     // 表示項目処理
     // 未完了件数表示
     setIncompCount(incompCount);
@@ -598,141 +515,10 @@ export default function ZPOUX001_01() {
     setUnfinishedHour(hour.toString().padStart(2,"　"));
 
     // 未完了一覧テーブルにバインド
-    setWorkItems(listdata);
+    setWorkItems(itemsWithIds);
     // 未完了データ格納
     setWorkData(itemsWithIds);
     return;
-  };
-
-  // データ生成
-  const itemcostm = (item) => {
-    const treedata =
-    {
-      DurationUnit: item.DurationUnit,
-      EffectivityParameterDesc: item.EffectivityParameterDesc,
-      ManufacturingOrder: item.ManufacturingOrder,
-      ManufacturingOrderImportance: item.ManufacturingOrderImportance,
-      ManufacturingOrderOperation: item.ManufacturingOrderOperation,
-      ManufacturingOrderText: item.ManufacturingOrderText,
-      Material: item.Material,
-      MaterialName: item.MaterialName,
-      MfgOpActyExecutionPriority: item.MfgOpActyExecutionPriority,
-      MfgOrderOperationText: item.MfgOrderOperationText,
-      NrOfOpActyTeamAssignments: item.NrOfOpActyTeamAssignments,
-      NrOfOpActyUserAssignments: item.NrOfOpActyUserAssignments,
-      NumberOfActiveShopFloorItems: item.NumberOfActiveShopFloorItems,
-      OpActualExecutionEndDateTime: item.OpActualExecutionEndDateTime,
-      OpActualExecutionStartDateTime: item.OpActualExecutionStartDateTime,
-      OpActyConfIsSFIBased: item.OpActyConfIsSFIBased,
-      OpActyExpdExecDurnInSeconds: item.OpActyExpdExecDurnInSeconds,
-      OpActyExpdExecutionDuration: item.OpActyExpdExecutionDuration,
-      OpActyExpdExecutionLaborDurn: item.OpActyExpdExecutionLaborDurn,
-      OpActyHasMissingComponents: item.OpActyHasMissingComponents,
-      OpActyIsSeldForRtactvPostg: item.OpActyIsSeldForRtactvPostg,
-      OpActyNtwkElement: item.OpActyNtwkElement,
-      OpActyNtwkElementExternalID: item.OpActyNtwkElementExternalID,
-      OpActyNtwkInstance: item.OpActyNtwkInstance,
-      OpActyNtwkSegmentType: item.OpActyNtwkSegmentType,
-      OpActyNtwkSegmentTypeText: item.OpActyNtwkSegmentTypeText,
-      OpLtstSchedldExecEndDteTme: item.OpLtstSchedldExecEndDteTme,
-      OpLtstSchedldExecStrtDteTme: item.OpLtstSchedldExecStrtDteTme,
-      OperationActivityHasProdnHold: item.OperationActivityHasProdnHold,
-      OperationActivityName: item.OperationActivityName,
-      OperationExecutionAvailableQty: item.OperationExecutionAvailableQty,
-      OrderIsTechnicallyCompleted: item.OrderIsTechnicallyCompleted,
-      ProductionHold: item.ProductionHold,
-      ProductionPlant: item.ProductionPlant,
-      ProductionUnit: item.ProductionUnit,
-      RespyMgmtTeamID: item.RespyMgmtTeamID,
-      SASStatusCategory: item.SASStatusCategory,
-      SASStatusCategoryName: item.SASStatusCategoryName,
-      SASStatusName: item.SASStatusName,
-      Start_rtactv_ac: item.Start_rtactv_ac,
-      StatusAndActionSchemaStatus: item.StatusAndActionSchemaStatus,
-      TeamName: item.TeamName,
-      UserDescription: item.UserDescription,
-      WorkCenter: item.WorkCenter,
-      WorkCenterText: item.WorkCenterText,
-      ZZ1_ACTGRP_ID_MOA: item.ZZ1_ACTGRP_ID_MOA,
-      ZZ1_ACTGRP_NM_MOA: item.ZZ1_ACTGRP_NM_MOA,
-      ZZ1_ASSIGN_TEMPLATE_ID_MOA: item.ZZ1_ASSIGN_TEMPLATE_ID_MOA,
-      ZZ1_ASSIGN_TEMPLATE_NM_MOA: item.ZZ1_ASSIGN_TEMPLATE_NM_MOA,
-      ZZ1_INCIDENTAL_ITEM_1_MOA: item.ZZ1_INCIDENTAL_ITEM_1_MOA,
-      ZZ1_INCIDENTAL_ITEM_2_MOA: item.ZZ1_INCIDENTAL_ITEM_2_MOA,
-      ZZ1_INCIDENTAL_ITEM_3_MOA: item.ZZ1_INCIDENTAL_ITEM_3_MOA,
-      ZZ1_INCIDENTAL_ITEM_4_MOA: item.ZZ1_INCIDENTAL_ITEM_4_MOA,
-      ZZ1_INCIDENTAL_ITEM_5_MOA: item.ZZ1_INCIDENTAL_ITEM_5_MOA,
-      ZZ1_KMGRP_ID_MOA: item.ZZ1_KMGRP_ID_MOA,
-      ZZ1_KMGRP_NM_MOA: item.ZZ1_KMGRP_NM_MOA,
-      ZZ1_TARGET_TIME_MOA: item.ZZ1_TARGET_TIME_MOA,
-      id: item.id,
-      details: item.details
-    };
-    return treedata;
-  };
-
-  // データ生成
-  const delItem = (data) => {
-    const item = [];
-    item.ManufacturingOrder = data.ManufacturingOrder
-    item.ManufacturingOrderOperation = data.ManufacturingOrderOperation
-    item.DurationUnit = "";
-    item.EffectivityParameterDesc = "";
-    item.ManufacturingOrderImportance = ""
-    item.ManufacturingOrderText = ""
-    item.Material = ""
-    item.MaterialName = ""
-    item.MfgOpActyExecutionPriority = ""
-    item.MfgOrderOperationText = ""
-    item.NrOfOpActyTeamAssignments = ""
-    item.NrOfOpActyUserAssignments = ""
-    item.NumberOfActiveShopFloorItems = ""
-    item.OpActualExecutionEndDateTime = ""
-    item.OpActualExecutionStartDateTime = ""
-    item.OpActyConfIsSFIBased = ""
-    item.OpActyExpdExecDurnInSeconds = ""
-    item.OpActyExpdExecutionDuration = ""
-    item.OpActyExpdExecutionLaborDurn = ""
-    item.OpActyHasMissingComponents = ""
-    item.OpActyIsSeldForRtactvPostg = ""
-    item.OpActyNtwkElement = ""
-    item.OpActyNtwkElementExternalID = ""
-    item.OpActyNtwkInstance = ""
-    item.OpActyNtwkSegmentType = ""
-    item.OpActyNtwkSegmentTypeText = ""
-    item.OpLtstSchedldExecEndDteTme = ""
-    item.OpLtstSchedldExecStrtDteTme = ""
-    item.OperationActivityHasProdnHold = ""
-    item.OperationActivityName = ""
-    item.OperationExecutionAvailableQty = ""
-    item.OrderIsTechnicallyCompleted = ""
-    item.ProductionHold = ""
-    item.ProductionPlant = ""
-    item.ProductionUnit = ""
-    item.RespyMgmtTeamID = ""
-    item.SASStatusCategory = ""
-    item.SASStatusCategoryName = ""
-    item.SASStatusName = ""
-    item.Start_rtactv_ac = ""
-    item.StatusAndActionSchemaStatus = ""
-    item.TeamName = ""
-    item.UserDescription = ""
-    item.WorkCenter = ""
-    item.WorkCenterText = ""
-    item.ZZ1_ACTGRP_ID_MOA = ""
-    item.ZZ1_ACTGRP_NM_MOA = ""
-    item.ZZ1_ASSIGN_TEMPLATE_ID_MOA = ""
-    item.ZZ1_ASSIGN_TEMPLATE_NM_MOA = ""
-    item.ZZ1_INCIDENTAL_ITEM_1_MOA = ""
-    item.ZZ1_INCIDENTAL_ITEM_2_MOA = ""
-    item.ZZ1_INCIDENTAL_ITEM_3_MOA = ""
-    item.ZZ1_INCIDENTAL_ITEM_4_MOA = ""
-    item.ZZ1_INCIDENTAL_ITEM_5_MOA = ""
-    item.ZZ1_KMGRP_ID_MOA = ""
-    item.ZZ1_KMGRP_NM_MOA = ""
-    item.ZZ1_TARGET_TIME_MOA = ""
-    item.details = ""
-    return item;
   };
 
   /**
@@ -860,22 +646,27 @@ export default function ZPOUX001_01() {
 
   // 作業開始ボタン押下
   const onBtnWorkStart = async () => {
-    setErrMessage("");
-    // 未選択チェック
-    if(OpActyNtwkInstance == "" || OpActyNtwkElement == ""){
-      setErrMessage(i18nBundle.getText('F_011_E'));
-      // エラーメッセージボックス表示
-      setErrBoxOpen(true);
-      return;
-    };
-    // パラメータ
-    // シリアル番号 or ロット品
-    if(OpActyConfIsSFIBased == "X"){
-      // シリアル番号
-      onStartWorkSerial(OpActyNtwkInstance, OpActyNtwkElement, SASStatusCategory);
-    } else {
-      // ロット品
-      postStartWorkLot(OpActyNtwkInstance, OpActyNtwkElement, SASStatusCategory);
+    try{
+      setLoading(true);     // ローディング画面表示
+      setErrMessage("");
+      // 未選択チェック
+      if(OpActyNtwkInstance == "" || OpActyNtwkElement == ""){
+        setErrMessage(i18nBundle.getText('F_011_E'));
+        // エラーメッセージボックス表示
+        setErrBoxOpen(true);
+        return;
+      };
+      // パラメータ
+      // シリアル番号 or ロット品
+      if(OpActyConfIsSFIBased == "X"){
+        // シリアル番号
+        onStartWorkSerial(OpActyNtwkInstance, OpActyNtwkElement, SASStatusCategory);
+      } else {
+        // ロット品
+        postStartWorkLot(OpActyNtwkInstance, OpActyNtwkElement, SASStatusCategory);
+      }
+    } finally{
+      setLoading(false);     // ローディング画面表示
     }
   };
 
@@ -884,6 +675,7 @@ export default function ZPOUX001_01() {
   const onStartWorkSerial = async (opActyNtwkInstance, opActyNtwkElement, statusCategory) => {
     // Odata送信 作業開始
     try {
+      setLoading(true);     // ローディング画面表示
       // ショップフローアイテム取得
       return await getShopFloorItem()
       .then(async shopFloorItem => {
@@ -910,6 +702,8 @@ export default function ZPOUX001_01() {
       });
     } catch (error) {
       return error;
+    } finally {
+      setLoading(false);     // ローディング画面表示
     }
   };
 
@@ -1061,17 +855,18 @@ export default function ZPOUX001_01() {
   
   // シリアル番号選択後の処理
   const setSelectSerialNo = async (props) => {
-    const opActyNtwkInstance = props.OpActyNtwkInstance;
-    const opActyNtwkElement = props.OpActyNtwkElement;
-    const shopFloorItem = props.ShopFloorItem;
-    const sASStatusCategory = props.SASStatusCategory;
-    if(seriaCallDispName == LIST_PTN_WORKSTART){
-      // 作業開始
-      postStartWorkSerial(opActyNtwkInstance, opActyNtwkElement, shopFloorItem, sASStatusCategory);
-    } else if(seriaCallDispName == LIST_PTN_CONTENTS) {
-      // 作業活動内容
-      if (contentsPopRef.current) {
-        try{
+    try{
+      setLoading(true);     // ローディング画面表示
+      const opActyNtwkInstance = props.OpActyNtwkInstance;
+      const opActyNtwkElement = props.OpActyNtwkElement;
+      const shopFloorItem = props.ShopFloorItem;
+      const sASStatusCategory = props.SASStatusCategory;
+      if(seriaCallDispName == LIST_PTN_WORKSTART){
+        // 作業開始
+        postStartWorkSerial(opActyNtwkInstance, opActyNtwkElement, shopFloorItem, sASStatusCategory);
+      } else if(seriaCallDispName == LIST_PTN_CONTENTS) {
+        // 作業活動内容
+        if (contentsPopRef.current) {
           // ショップフローアイテム取得
           let _items = [];
           const strLang = getLanguage();
@@ -1097,10 +892,12 @@ export default function ZPOUX001_01() {
             setContentsPopOpen((prev) => !prev);
           };
           return;
-        } catch (error) {
-          return;
         }
       }
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);     // ローディング画面表示
     }
   };
 
@@ -1165,38 +962,6 @@ export default function ZPOUX001_01() {
       // detailsClick(event);
     }
     return;
-  };
-
-  // 終了ボタンクリック
-  const [openWorkEnd, setOpenWorkEnd] = useState(false);
-  const onBtnWorkEnd = () => {
-    setOpenWorkEnd(true);
-  };
-
-  // 終了ボタン-メッセージボックス
-  const MessageBoxComponent = () => {
-    // メッセージボックス ボタンアクション
-    const handleClose = (event) => {
-      if (event.detail.action === 'OK') {
-        // OK押下時
-        // タブを閉じる
-        window.close();
-      } else {
-        // キャンセル押下時
-      }
-      setOpenWorkEnd(false);
-    };
-   
-    return (
-      <MessageBox
-        open={openWorkEnd}
-        onClose={handleClose}
-        actions={['OK', 'Cancel']}
-      >
-        {/* 業務を終了します。よろしいですか？ */}
-        {i18nBundle.getText('F_010_I')}
-      </MessageBox>
-    );
   };
 
   // 検索項目
@@ -1604,6 +1369,7 @@ export default function ZPOUX001_01() {
           ref={contentsPopRef}
           open={contentsPopOpen}
           onAfterClose={()=>{setContentsPopOpen(false);}}
+          hideArrow
         >
           {/* 作業活動内容 */}
           {ReactHtmlParser(divContents)}
@@ -1673,6 +1439,7 @@ export default function ZPOUX001_01() {
     // 作業活動内容を表示
     if (contentsPopRef.current) {
       try{
+        setLoading(true);     // ローディング画面表示
         contentsPopRef.current.opener = event.target.id;
         setOpenerId(event.target.id);
         // 作業活動内容の情報を取得
@@ -1684,6 +1451,8 @@ export default function ZPOUX001_01() {
         } 
       } catch (error) {
         return;
+      } finally {
+        setLoading(false);     // ローディング画面表示
       }
     }
   };
@@ -1704,11 +1473,11 @@ export default function ZPOUX001_01() {
         <Popover
           id={"detailsPop"}
           opener={DetailsIsOpen}
-          // opener={'tester'}
           placementType="Left"
           ref={popoverRef}
           open={popoverIsOpen}
           onAfterClose={()=>{setPopoverIsOpen(false);}}
+          hideArrow
         >
           {/* ここに作業一覧データの詳細を記載 */}
           <ResponsiveGridLayout
@@ -2022,12 +1791,16 @@ export default function ZPOUX001_01() {
 
   // 入れ替え時のイベント
   const onColumnsReorder = (event) => {
-    console.log(TblInstance);
-    console.log(event);
     const columnsNewOrder = event.detail.columnsNewOrder.map((item) => {
       return item.id ;
     });
     setCookie("columnOrders", JSON.stringify(columnsNewOrder.toString()));
+  };
+
+  // グループ化イベント
+  const [group, setGroup] = useState(['ManufacturingOrder','ManufacturingOrderOperation']);
+  const onGroup = (event) => {
+    setGroup(event.detail.groupedColumns);
   };
   
 
@@ -2039,7 +1812,7 @@ export default function ZPOUX001_01() {
     <div>
         <Toolbar
           className="Zpoux001_01-HederArea"
-          design="Auto"
+          design="Solid"
           toolbarStyle="Clear"
           // alignContent="End"
           style={{'height': '70px'}}
@@ -2058,6 +1831,7 @@ export default function ZPOUX001_01() {
           <br/>
           <Text style={{'font-size': '0.8em', 'font-weight': 'bolder'}}>{i18nBundle.getText('tabCompletion')}</Text>
         </div>
+        <ToolbarSpacer style={{'flex-grow': '0.4'}}/>
         <FlexBox
           alignItems={FlexBoxAlignItems.Center}
           direction="Row"
@@ -2088,20 +1862,23 @@ export default function ZPOUX001_01() {
             <ProgressRate />
           </FlexBox>
         </Toolbar>
+        <BusyIndicator
+          active={loading}
+          size="Large"
+        >
         <div className="Zpoux001_01-MainFrameContents">
           <AnalyticalTable
             columns={COLUMNS}
             className="tablecolor"
             data={workItems}
             scaleWidthMode={AnalyticalTableScaleWidthMode.Smart}
-            filterable={false}
-            groupBy={[]}
+            filterable
+            groupBy={group}
             groupable
             header=""
             infiniteScroll
-            isTreeTable
             onColumnsReorder={onColumnsReorder}
-            onGroup={() => {}}
+            onGroup={onGroup}
             onLoadMore={() => {}}
             onRowClick={onRowClick}
             onRowExpandChange={() => {}}
@@ -2123,9 +1900,11 @@ export default function ZPOUX001_01() {
             reactTableOptions={{
               autoResetHiddenColumns: false,
               autoResetSortBy: false,
+              autoResetGroupBy: false,
             }}
           /> 
         </div>
+        </BusyIndicator>
         <div className="Zpoux001_01-ButtonArea1">
           <FlexBox
             alignItems="Center"
@@ -2148,7 +1927,6 @@ export default function ZPOUX001_01() {
           alignItems={FlexBoxAlignItems.Center}
         >
           <Button className="Zpoux001_01-BigButton2" onClick={onBtnWorkStart} design="Emphasized" style={{ width: '300px', height: '60px' }}>{i18nBundle.getText('btnStart')}</Button>
-          <Button className="Zpoux001_01-BigButton1" onClick={onBtnWorkEnd} design="Default" style={{ width: '210px', height: '60px', position: 'absolute',right: '5%', 'border': '2px solid #0070f2', 'font-weight': 'bold' }} >{i18nBundle.getText('btnFinish')}</Button>
         </FlexBox>
       <SerialNumberListModal
         componentList={dataSerial}
@@ -2166,7 +1944,6 @@ export default function ZPOUX001_01() {
       <ViewSettingsDialogComponent />
       <ContentsPopComponent />
       <DetailsPopComponent />
-      <MessageBoxComponent />
       <ErrMessageBox />
     </div>
     </CookiesProvider>
